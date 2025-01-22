@@ -12,25 +12,24 @@ map.on('dblclick', function(e) {
 
 function addMarker(latlng, image = null, description = null) {
   var marker = L.marker(latlng).addTo(map);
-  marker.image = image; // Inicializar con la imagen proporcionada
-  marker.description = description; // Inicializar con la descripción proporcionada
+  marker.image = image;
+  marker.description = description;
 
   marker.on('click', function() {
-    if (marker.image || marker.description) {
+    if (hasContent(marker)) {
       showMarkerMenu(latlng, marker);
     } else {
       openModal(latlng, marker);
     }
   });
 
-  // Si no se sube una imagen o descripción, eliminar el marcador
   marker.on('popupclose', function() {
-    if (!marker.image && !marker.description) {
-      map.removeLayer(marker);
+    if (!hasContent(marker)) {
+      removeMarker(marker);
     }
   });
 
-  saveMarkers(); // Guardar los marcadores en Local Storage
+  saveMarkers();
 }
 
 function showMarkerMenu(latlng, marker) {
@@ -47,8 +46,10 @@ function showMarkerMenu(latlng, marker) {
 window.deleteMarker = function(markerId) {
   var marker = map._layers[markerId];
   if (marker) {
-    map.removeLayer(marker);
-    saveMarkers(); // Guardar los marcadores en Local Storage
+    var confirmation = confirm("¿Estás seguro de que quieres borrar este marcador?");
+    if (confirmation) {
+      removeMarker(marker);
+    }
   }
 };
 
@@ -56,22 +57,12 @@ function openModal(latlng, marker, isEdit = false) {
   var modal = document.getElementById('modal');
   modal.style.display = "block";
 
-  // Limpiar el input de archivo al abrir el modal
   document.getElementById('image-file').value = '';
-
-  if (isEdit) {
-    document.getElementById('image-description').value = marker.description || '';
-  } else {
-    document.getElementById('image-description').value = '';
-  }
+  document.getElementById('image-description').value = isEdit ? marker.description || '' : '';
 
   var closeBtn = document.getElementsByClassName("close")[0];
   closeBtn.onclick = function() {
-    modal.style.display = "none";
-    if (!marker.image && !marker.description) {
-      map.removeLayer(marker); // Eliminar el marcador si no tiene imagen ni descripción
-    }
-    saveMarkers(); // Guardar los marcadores en Local Storage
+    closeModal(marker);
   };
 
   var form = document.getElementById('image-form');
@@ -79,65 +70,77 @@ function openModal(latlng, marker, isEdit = false) {
     event.preventDefault();
     var imageDescription = document.getElementById('image-description').value;
     if (marker.image || imageDescription) {
-      marker.description = imageDescription; // Asignar descripción al marcador
-      L.popup()
-        .setLatLng(latlng)
-        .setContent((marker.image ? '<img src="' + marker.image + '" alt="Imagen" width="200"><br>' : '') +
-                    (imageDescription ? '<p>' + imageDescription + '</p><br>' : '') +
-                    '<button class="edit-marker-btn" onclick="editMarker(' + marker._leaflet_id + ')">✎</button>' +
-                    '<button class="delete-marker-btn" onclick="deleteMarker(' + marker._leaflet_id + ')">✖</button>')
-        .openOn(map);
+      marker.description = imageDescription;
+      updateMarkerPopup(latlng, marker);
     }
-    modal.style.display = "none";
-    saveMarkers(); // Guardar los marcadores en Local Storage
+    closeModal(marker);
   };
 
   window.onclick = function(event) {
     if (event.target == modal) {
-      modal.style.display = "none";
-      if (!marker.image && !marker.description) {
-        map.removeLayer(marker); // Eliminar el marcador si no tiene imagen ni descripción
-      }
-      saveMarkers(); // Guardar los marcadores en Local Storage
+      closeModal(marker);
     }
   };
 
-  // Funcionalidad de arrastrar y soltar
   var dropArea = document.getElementById('drop-area');
-  dropArea.addEventListener('dragover', function(event) {
-    event.preventDefault();
-    dropArea.classList.add('dragover');
-  });
-  dropArea.addEventListener('dragleave', function(event) {
-    event.preventDefault();
-    dropArea.classList.remove('dragover');
-  });
+  dropArea.addEventListener('dragover', handleDragOver);
+  dropArea.addEventListener('dragleave', handleDragLeave);
   dropArea.addEventListener('drop', function(event) {
-    event.preventDefault();
-    dropArea.classList.remove('dragover');
-    var file = event.dataTransfer.files[0];
-    if (file && file.type.startsWith('image/')) {
-      var reader = new FileReader();
-      reader.onload = function(event) {
-        marker.image = event.target.result;
-        saveMarkers(); // Guardar los marcadores en Local Storage
-      };
-      reader.readAsDataURL(file);
-    }
+    handleFileDrop(event, marker);
   });
 
-  // Agregar el evento `change` al input de archivo
   document.getElementById('image-file').addEventListener('change', function(event) {
-    var file = event.target.files[0];
-    if (file && file.type.startsWith('image/')) {
-      var reader = new FileReader();
-      reader.onload = function(event) {
-        marker.image = event.target.result;
-        saveMarkers(); // Guardar los marcadores en Local Storage
-      };
-      reader.readAsDataURL(file);
-    }
+    handleFileSelect(event, marker);
   });
+}
+
+function closeModal(marker) {
+  var modal = document.getElementById('modal');
+  modal.style.display = "none";
+  if (!hasContent(marker)) {
+    removeMarker(marker);
+  }
+  saveMarkers();
+}
+
+function handleDragOver(event) {
+  event.preventDefault();
+  event.target.classList.add('dragover');
+}
+
+function handleDragLeave(event) {
+  event.preventDefault();
+  event.target.classList.remove('dragover');
+}
+
+function handleFileDrop(event, marker) {
+  event.preventDefault();
+  event.target.classList.remove('dragover');
+  var file = event.dataTransfer.files[0];
+  if (file && file.type.startsWith('image/')) {
+    readFile(file, function(result) {
+      marker.image = result;
+      saveMarkers();
+    });
+  }
+}
+
+function handleFileSelect(event, marker) {
+  var file = event.target.files[0];
+  if (file && file.type.startsWith('image/')) {
+    readFile(file, function(result) {
+      marker.image = result;
+      saveMarkers();
+    });
+  }
+}
+
+function readFile(file, callback) {
+  var reader = new FileReader();
+  reader.onload = function(event) {
+    callback(event.target.result);
+  };
+  reader.readAsDataURL(file);
 }
 
 window.editMarker = function(markerId) {
@@ -146,6 +149,25 @@ window.editMarker = function(markerId) {
     openModal(marker.getLatLng(), marker, true);
   }
 };
+
+function removeMarker(marker) {
+  map.removeLayer(marker);
+  saveMarkers();
+}
+
+function updateMarkerPopup(latlng, marker) {
+  L.popup()
+    .setLatLng(latlng)
+    .setContent((marker.image ? '<img src="' + marker.image + '" alt="Imagen" width="200"><br>' : '') +
+                (marker.description ? '<p>' + marker.description + '</p><br>' : '') +
+                '<button class="edit-marker-btn" onclick="editMarker(' + marker._leaflet_id + ')">✎</button>' +
+                '<button class="delete-marker-btn" onclick="deleteMarker(' + marker._leaflet_id + ')">✖</button>')
+    .openOn(map);
+}
+
+function hasContent(marker) {
+  return marker.image || marker.description;
+}
 
 function saveMarkers() {
   var markers = [];
@@ -168,5 +190,4 @@ function loadMarkers() {
   });
 }
 
-// Cargar los marcadores guardados al iniciar la página
 loadMarkers();
