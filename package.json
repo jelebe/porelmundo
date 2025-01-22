@@ -2,7 +2,7 @@
     "name": "mi-proyecto",
     "version": "1.0.0",
     "description": "Proyecto de mapa interactivo con Supabase",
-    "main": "src/index.js",
+    "main": "src/index.html",
     "scripts": {
         "start": "react-scripts start",
         "build": "react-scripts build",
