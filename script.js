@@ -181,4 +181,39 @@ function hasContent(marker) {
 }
 
 async function saveMarkers() {
-  // Elimina todos los registros[_{{{CITATION{{{_1{](https://github.com/izaakbc/izaakbc.github.io/tree/b028145610b876ca22b983d8c24f653950cb4b1d/LeafletWMS.js)[_{{{CITATION{{{_2{](https://github.com/CarlosFTG/weatherapp/tree/05f5b98653e767c14fa9c50ae51ee620133b5c64/front%2Fsrc%2Fapp%2Fcomponents%2Fmap%2Fmap.component.ts)
+  // Elimina todos los registros anteriores
+  await supabase.from('markers').delete().not('id', 'is', null);
+  var markers = [];
+  map.eachLayer(function(layer) {
+    if (layer instanceof L.Marker) {
+      markers.push({
+        lat: layer.getLatLng().lat,
+        lng: layer.getLatLng().lng,
+        image: layer.image,
+        description: layer.description,
+        date: layer.date
+      });
+    }
+  });
+  const { data, error } = await supabase.from('markers').insert(markers);
+  if (error) {
+    console.error("Error guardando los marcadores en Supabase:", error);
+  } else {
+    console.log("Marcadores guardados en Supabase:", data);
+  }
+}
+
+async function loadMarkers() {
+  const { data: markers, error } = await supabase.from('markers').select('*');
+  if (error) {
+    console.error("Error cargando los marcadores desde Supabase:", error);
+  } else {
+    markers.forEach(function(markerData) {
+      addMarker([markerData.lat, markerData.lng], markerData.image, markerData.description, markerData.date);
+    });
+  }
+}
+
+map.whenReady(function() {
+  loadMarkers();
+});
