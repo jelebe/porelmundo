@@ -58,6 +58,47 @@ window.deleteMarker = function(markerId) {
   }
 };
 
+async function uploadImage(file) {
+  const { data, error } = await supabase
+    .storage
+    .from('images')
+    .upload(`public/${file.name}`, file);
+
+  if (error) {
+    console.error('Error subiendo la imagen:', error.message);
+    return null;
+  }
+
+  const { publicURL, error: publicError } = supabase
+    .storage
+    .from('images')
+    .getPublicUrl(`public/${file.name}`);
+
+  if (publicError) {
+    console.error('Error obteniendo la URL pública:', publicError.message);
+    return null;
+  }
+
+  return publicURL;
+}
+
+async function handleFileSelect(event, marker) {
+  var file = event.target.files[0];
+  if (file && file.type.startsWith('image/')) {
+    readFile(file, async function(result) {
+      marker.image = result;
+
+      const publicURL = await uploadImage(file);
+      if (publicURL) {
+        marker.image = publicURL;
+        saveMarkers();
+      } else {
+        console.error('No se pudo obtener la URL pública de la imagen.');
+      }
+    });
+  }
+}
+
 function openModal(latlng, marker, isEdit = false) {
   var modal = document.getElementById('modal');
   modal.style.display = "block";
@@ -72,14 +113,32 @@ function openModal(latlng, marker, isEdit = false) {
   };
 
   var form = document.getElementById('image-form');
-  form.onsubmit = function(event) {
+  form.onsubmit = async function(event) {
     event.preventDefault();
     var imageDescription = document.getElementById('image-description').value;
     var imageDate = document.getElementById('image-date').value;
+
     if (marker.image || imageDescription) {
       marker.description = imageDescription;
       marker.date = imageDate;
       updateMarkerPopup(latlng, marker);
+
+      // Guardar datos del marcador en Supabase
+      const { data, error } = await supabase
+        .from('markers')
+        .insert([{ 
+          lat: latlng.lat, 
+          lng: latlng.lng, 
+          image: marker.image, 
+          description: marker.description, 
+          date: imageDate // Asegúrate de que date sea del tipo `date` en Supabase
+        }]);
+      
+      if (error) {
+        console.error('Error guardando el marcador en Supabase:', error.message);
+      } else {
+        console.log('Marcador guardado en Supabase:', data);
+      }
     }
     closeModal(marker);
   };
@@ -129,19 +188,16 @@ function handleFileDrop(event, marker) {
   document.getElementById('drag-confirmation').style.display = 'none';
   var file = event.dataTransfer.files[0];
   if (file && file.type.startsWith('image/')) {
-    readFile(file, function(result) {
+    readFile(file, async function(result) {
       marker.image = result;
-      saveMarkers();
-    });
-  }
-}
 
-function handleFileSelect(event, marker) {
-  var file = event.target.files[0];
-  if (file && file.type.startsWith('image/')) {
-    readFile(file, function(result) {
-      marker.image = result;
-      saveMarkers();
+      const publicURL = await uploadImage(file);
+      if (publicURL) {
+        marker.image = publicURL;
+        saveMarkers();
+      } else {
+        console.error('No se pudo obtener la URL pública de la imagen.');
+      }
     });
   }
 }
