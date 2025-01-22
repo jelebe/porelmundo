@@ -181,17 +181,4 @@ function hasContent(marker) {
 }
 
 async function saveMarkers() {
-  // Elimina todos los registros anteriores
-  await supabase.from('markers').delete().not('id', 'is', null);
-  var markers = [];
-  map.eachLayer(function(layer) {
-    if (layer instanceof L.Marker) {
-      markers.push({
-        lat: layer.getLatLng().lat,
-        lng: layer.getLatLng().lng,
-        image: layer.image,
-        description: layer.description,
-        date: layer.date
-      });
-    }
- [_{{{CITATION{{{_1{](https://github.com/la9una/web/tree/ba1073ae044ebb7b538a3b13f0f9598f7c410bb6/docs%2Fbootstrap%2Falignci.md)[_{{{CITATION{{{_2{](https://github.com/izaakbc/izaakbc.github.io/tree/b028145610b876ca22b983d8c24f653950cb4b1d/LeafletWMS.js)[_{{{CITATION{{{_3{](https://github.com/CarlosFTG/weatherapp/tree/05f5b98653e767c14fa9c50ae51ee620133b5c64/front%2Fsrc%2Fapp%2Fcomponents%2Fmap%2Fmap.component.ts)
+  // Elimina todos los registros[_{{{CITATION{{{_1{](https://github.com/izaakbc/izaakbc.github.io/tree/b028145610b876ca22b983d8c24f653950cb4b1d/LeafletWMS.js)[_{{{CITATION{{{_2{](https://github.com/CarlosFTG/weatherapp/tree/05f5b98653e767c14fa9c50ae51ee620133b5c64/front%2Fsrc%2Fapp%2Fcomponents%2Fmap%2Fmap.component.ts)
