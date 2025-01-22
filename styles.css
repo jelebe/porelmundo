@@ -106,9 +106,28 @@ body {
     background-color: #f9f9f9;
 }
 
+.drag-confirmation {
+    display: none;
+    color: green;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+.drop-area.dragover .drag-confirmation {
+    display: block;
+}
+
 /* Título centrado */
 .title {
     text-align: center;
     font-family: 'Verdana', sans-serif; /* Cambia la fuente del título aquí */
     margin-bottom: 20px; /* Espacio debajo del título */
+}
+
+/* Estilo para la fecha del marcador */
+.marker-date {
+    font-size: 12px; /* Tamaño de fuente más pequeño */
+    font-family: 'Courier New', Courier, monospace; /* Cambia la fuente */
+    color: #555; /* Color de texto */
+    margin-bottom: 5px; /* Espacio debajo de la fecha */
 }

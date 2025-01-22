@@ -10,10 +10,11 @@ map.on('dblclick', function(e) {
   addMarker([lat, lng]);
 });
 
-function addMarker(latlng, image = null, description = null) {
+function addMarker(latlng, image = null, description = null, date = null) {
   var marker = L.marker(latlng).addTo(map);
   marker.image = image;
   marker.description = description;
+  marker.date = date;
 
   marker.on('click', function() {
     if (hasContent(marker)) {
@@ -33,7 +34,8 @@ function addMarker(latlng, image = null, description = null) {
 }
 
 function showMarkerMenu(latlng, marker) {
-  var popupContent = (marker.image ? '<img src="' + marker.image + '" alt="Imagen" width="200"><br>' : '') + 
+  var popupContent = (marker.date ? '<p class="marker-date">' + marker.date + '</p><br>' : '') +
+                     (marker.image ? '<img src="' + marker.image + '" alt="Imagen" width="200"><br>' : '') + 
                      (marker.description ? '<p>' + marker.description + '</p><br>' : '') +
                      '<button class="edit-marker-btn" onclick="editMarker(' + marker._leaflet_id + ')">✎</button>' +
                      '<button class="delete-marker-btn" onclick="deleteMarker(' + marker._leaflet_id + ')">✖</button>';
@@ -59,6 +61,7 @@ function openModal(latlng, marker, isEdit = false) {
 
   document.getElementById('image-file').value = '';
   document.getElementById('image-description').value = isEdit ? marker.description || '' : '';
+  document.getElementById('image-date').value = isEdit ? marker.date || '' : '';
 
   var closeBtn = document.getElementsByClassName("close")[0];
   closeBtn.onclick = function() {
@@ -69,8 +72,10 @@ function openModal(latlng, marker, isEdit = false) {
   form.onsubmit = function(event) {
     event.preventDefault();
     var imageDescription = document.getElementById('image-description').value;
+    var imageDate = document.getElementById('image-date').value;
     if (marker.image || imageDescription) {
       marker.description = imageDescription;
+      marker.date = imageDate;
       updateMarkerPopup(latlng, marker);
     }
     closeModal(marker);
@@ -106,16 +111,19 @@ function closeModal(marker) {
 function handleDragOver(event) {
   event.preventDefault();
   event.target.classList.add('dragover');
+  document.getElementById('drag-confirmation').style.display = 'block';
 }
 
 function handleDragLeave(event) {
   event.preventDefault();
   event.target.classList.remove('dragover');
+  document.getElementById('drag-confirmation').style.display = 'none';
 }
 
 function handleFileDrop(event, marker) {
   event.preventDefault();
   event.target.classList.remove('dragover');
+  document.getElementById('drag-confirmation').style.display = 'none';
   var file = event.dataTransfer.files[0];
   if (file && file.type.startsWith('image/')) {
     readFile(file, function(result) {
@@ -158,7 +166,8 @@ function removeMarker(marker) {
 function updateMarkerPopup(latlng, marker) {
   L.popup()
     .setLatLng(latlng)
-    .setContent((marker.image ? '<img src="' + marker.image + '" alt="Imagen" width="200"><br>' : '') +
+    .setContent((marker.date ? '<p class="marker-date">' + marker.date + '</p><br>' : '') +
+                (marker.image ? '<img src="' + marker.image + '" alt="Imagen" width="200"><br>' : '') +
                 (marker.description ? '<p>' + marker.description + '</p><br>' : '') +
                 '<button class="edit-marker-btn" onclick="editMarker(' + marker._leaflet_id + ')">✎</button>' +
                 '<button class="delete-marker-btn" onclick="deleteMarker(' + marker._leaflet_id + ')">✖</button>')
@@ -166,7 +175,7 @@ function updateMarkerPopup(latlng, marker) {
 }
 
 function hasContent(marker) {
-  return marker.image || marker.description;
+  return marker.image || marker.description || marker.date;
 }
 
 function saveMarkers() {
@@ -176,7 +185,8 @@ function saveMarkers() {
       markers.push({
         latlng: layer.getLatLng(),
         image: layer.image,
-        description: layer.description
+        description: layer.description,
+        date: layer.date
       });
     }
   });
@@ -186,8 +196,9 @@ function saveMarkers() {
 function loadMarkers() {
   var markers = JSON.parse(localStorage.getItem('markers')) || [];
   markers.forEach(function(markerData) {
-    addMarker(markerData.latlng, markerData.image, markerData.description);
+    addMarker(markerData.latlng, markerData.image, markerData.description, markerData.date);
   });
 }
 
 loadMarkers();
+

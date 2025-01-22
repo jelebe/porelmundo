@@ -12,7 +12,6 @@
 <h3 class="title">Besos por el Mundo</h3>
 <div id="map"></div>
 
-
 <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 <script src="script.js"></script>
 
@@ -23,16 +22,22 @@
       <div class="form-spacing drop-area" id="drop-area">
         Arrastra una imagen aquí o selecciona una imagen:
         <input type="file" id="image-file" accept="image/*">
+        <span id="drag-confirmation" class="drag-confirmation">Imagen arrastrada y lista para subir</span>
       </div>
       <div class="form-spacing">
         <label for="image-description">Descripción:</label>
         <textarea id="image-description" name="image-description" rows="3" cols="40"></textarea>
       </div>
+      <div class="form-spacing">
+        <label for="image-date">Fecha:</label>
+        <input type="date" id="image-date" name="image-date">
+      </div>
+      
       <input type="submit" value="Subir">
     </form>
   </div>
 </div>
 
-
 </body>
 </html>
+
