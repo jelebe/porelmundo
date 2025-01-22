@@ -7,6 +7,8 @@ Versión pre-alpha:
 - Creación de marcador al clicar dos veces en una localización.
 - Inclusión de botones para modificar y borrar marcadores.
 - Inclusión de mensaje de seguridad en el botón de borrar marcador.
+- Inclusión de calendario. Permite añadir la fecha en la que se hizo la fotografía.
+- Modificación del css para ajuste en móvil.
 >
 >
 >
