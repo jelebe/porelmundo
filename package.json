@@ -2,27 +2,28 @@
     "name": "mi-proyecto",
     "version": "1.0.0",
     "description": "Proyecto de mapa interactivo con Supabase",
-    "main": "src/index.html",
+    "main": "public/index.html",
     "scripts": {
-        "start": "react-scripts start",
-        "build": "react-scripts build",
-        "deploy": "gh-pages -d build"
+      "start": "react-scripts start",
+      "build": "react-scripts build",
+      "deploy": "gh-pages -d build"
     },
     "homepage": "https://jelebe.github.io/porelmundo/",
     "dependencies": {
-        "@supabase/supabase-js": "^1.0.0",
-        "leaflet": "^1.7.1",
-        "react": "^17.0.2",
-        "react-dom": "^17.0.2"
+      "react": "^17.0.2",
+      "react-dom": "^17.0.2",
+      "@supabase/supabase-js": "^1.0.0",
+      "leaflet": "^1.7.1",
+      "gh-pages": "^3.2.3"
     },
     "devDependencies": {
-        "eslint": "^7.32.0",
-        "gh-pages": "^6.3.0"
+      "eslint": "^7.32.0"
     },
     "repository": {
-        "type": "git",
-        "url": "https://github.com/jelebe/porelmundo"
+      "type": "git",
+      "url": "git+https://github.com/jelebe/porelmundo.git"
     },
     "author": "Jelebe",
     "license": "MIT"
-}
+  }
+  
