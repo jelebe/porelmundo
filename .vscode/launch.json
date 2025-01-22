@@ -1,0 +1,10 @@
+{
+    "configurations": [
+        {
+            "type": "chrome",
+            "name": "https://jelebe.github.io/porelmundo/",
+            "request": "launch",
+            "url": "https://jelebe.github.io/porelmundo/"
+        }
+    ]
+}

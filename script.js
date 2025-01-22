@@ -1,3 +1,6 @@
+import { supabase } from './supabaseClient.js';
+
+// Tu código existente
 var map = L.map('map').setView([0, 0], 2);
 
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -175,7 +178,7 @@ function updateMarkerPopup(latlng, marker) {
 }
 
 function hasContent(marker) {
-  return marker.image || marker.description || marker.date;
+  return Boolean(marker.image || marker.description || marker.date);
 }
 
 function saveMarkers() {
@@ -201,4 +204,3 @@ function loadMarkers() {
 }
 
 loadMarkers();
-
