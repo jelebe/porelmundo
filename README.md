@@ -7,6 +7,8 @@ Versión pre-alpha:
 - Creación de marcador al clicar dos veces en una localización.
 - Inclusión de botones para modificar y borrar marcadores.
 - Inclusión de mensaje de seguridad en el botón de borrar marcador.
-
+>
+>
+>
 - Cosas a incluir:
     - Poner un buscador de localizaciones. Tener la posibilidad de poder introducir una ubicacion a mano y a partir de ahí crear un marcador. Así se puede ser más exacto.
