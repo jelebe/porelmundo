@@ -1,3 +1,5 @@
+import { supabase } from './supabaseClient.js';
+
 var map = L.map('map').setView([0, 0], 2);
 
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -194,16 +196,24 @@ async function saveMarkers() {
     }
   });
   const { data, error } = await supabase.from('markers').insert(markers);
+  if (error) {
+    console.error("Error guardando los marcadores en Supabase:", error);
+  } else {
+    console.log("Marcadores guardados en Supabase:", data);
+  }
 }
 
 async function loadMarkers() {
   const { data: markers, error } = await supabase.from('markers').select('*');
-  markers.forEach(function(markerData) {
-    addMarker([markerData.lat, markerData.lng], markerData.image, markerData.description, markerData.date);
-  });
+  if (error) {
+    console.error("Error cargando los marcadores desde Supabase:", error);
+  } else {
+    markers.forEach(function(markerData) {
+      addMarker([markerData.lat, markerData.lng], markerData.image, markerData.description, markerData.date);
+    });
+  }
 }
 
 map.whenReady(function() {
   loadMarkers();
 });
-
