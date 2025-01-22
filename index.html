@@ -7,6 +7,12 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+    <script>
+        import { createClient } from '@supabase/supabase-js'
+        const supabaseUrl = 'https://xwtggolgjirvemmvxjsy.supabase.co';
+        const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inh3dGdnb2xnamlydmVtbXZ4anN5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Mzc1NTQ1MjQsImV4cCI6MjA1MzEzMDUyNH0.dviH9wIFaIpFolnVHEuECslVF6ZwwyqgLGbZvGeSYnA';
+        const supabase = supabase.createClient(supabaseUrl, supabaseKey);
+        </script>
     <div class="login-container">
         <h2>Iniciar Sesión</h2>
         <form id="login-form">
@@ -19,5 +25,6 @@
         <p id="error-message"></p>
     </div>
     <script src="login.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
 </body>
 </html>

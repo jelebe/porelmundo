@@ -178,27 +178,32 @@ function hasContent(marker) {
   return marker.image || marker.description || marker.date;
 }
 
-function saveMarkers() {
+async function saveMarkers() {
+  // Elimina todos los registros anteriores
+  await supabase.from('markers').delete().not('id', 'is', null);
   var markers = [];
   map.eachLayer(function(layer) {
     if (layer instanceof L.Marker) {
       markers.push({
-        latlng: layer.getLatLng(),
+        lat: layer.getLatLng().lat,
+        lng: layer.getLatLng().lng,
         image: layer.image,
         description: layer.description,
         date: layer.date
       });
     }
   });
-  localStorage.setItem('markers', JSON.stringify(markers));
+  const { data, error } = await supabase.from('markers').insert(markers);
 }
 
-function loadMarkers() {
-  var markers = JSON.parse(localStorage.getItem('markers')) || [];
+async function loadMarkers() {
+  const { data: markers, error } = await supabase.from('markers').select('*');
   markers.forEach(function(markerData) {
-    addMarker(markerData.latlng, markerData.image, markerData.description, markerData.date);
+    addMarker([markerData.lat, markerData.lng], markerData.image, markerData.description, markerData.date);
   });
 }
 
-loadMarkers();
+map.whenReady(function() {
+  loadMarkers();
+});
 
