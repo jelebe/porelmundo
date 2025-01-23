@@ -131,13 +131,13 @@ body {
 /* Ajustes para dispositivos móviles */
 @media (max-width: 600px) {
     #map {
-        height: 80vh; /* Ajusta la altura del mapa en pantallas pequeñas */
+        height: 90vh; /* Ajusta la altura del mapa en pantallas pequeñas */
         width: 100%;
         max-width: 100%; /* Ancho completo en dispositivos móviles */
     }
 
     .modal-content {
-        width: 90%; /* Ancho en dispositivos móviles */
+        width: 95%; /* Ancho en dispositivos móviles */
         max-height: 90vh; /* Ajusta la altura máxima del contenido modal */
         overflow-y: auto; /* Habilita el scroll vertical */
     }
