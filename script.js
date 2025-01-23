@@ -1,27 +1,10 @@
 // script.js
-
-// Inicializar Firebase
-const firebaseConfig = {
-  apiKey: "AIzaSyCLHKZmeUUahOD9pCG9HGRed9zxwP5vHb0",
-  authDomain: "besosporelmundo.firebaseapp.com",
-  projectId: "besosporelmundo",
-  storageBucket: "besosporelmundo.firebasestorage.app",
-  messagingSenderId: "716617534132",
-  appId: "1:716617534132:web:77b9372971f803fcdd25e1"
-};
-
-const app = initializeApp(firebaseConfig);
-const database = getDatabase(app);
-
-
-// Inicializar el mapa
 var map = L.map('map').setView([0, 0], 2);
 
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
   attribution: '© OpenStreetMap contributors'
 }).addTo(map);
 
-// Manejar evento de doble clic para crear marcadores
 map.on('dblclick', function(e) {
   var lat = e.latlng.lat;
   var lng = e.latlng.lng;
@@ -48,46 +31,8 @@ function addMarker(latlng, image = null, description = null, date = null) {
     }
   });
 
-  saveMarkers(); // Guardar marcadores en Firebase
+  saveMarkers();
 }
-
-function saveMarkers() {
-  var markers = [];
-  map.eachLayer(function(layer) {
-    if (layer instanceof L.Marker) {
-      let markerData = {
-        lat: layer.getLatLng().lat,
-        lng: layer.getLatLng().lng,
-        image: layer.image,
-        description: layer.description,
-        date: layer.date
-      };
-      markers.push(markerData);
-      saveMarkersToDB(markerData); // Guardar en Firebase
-    }
-  });
-  localStorage.setItem('markers', JSON.stringify(markers));
-}
-
-// Guardar marcadores en Firebase
-function saveMarkersToDB(markerData) {
-  push(ref(database, 'markers'), markerData).catch(error => {
-    console.error('Error saving marker:', error);
-  });
-}
-
-// Cargar marcadores desde Firebase
-function loadMarkers() {
-  onValue(ref(database, 'markers'), snapshot => {
-    snapshot.forEach(childSnapshot => {
-      var markerData = childSnapshot.val();
-      addMarker([markerData.lat, markerData.lng], markerData.image, markerData.description, markerData.date);
-    });
-  });
-}
-
-// Llamar a la función loadMarkers al cargar la página
-loadMarkers();
 
 function showMarkerMenu(latlng, marker) {
   var popupContent = (marker.image ? '<img src="' + marker.image + '" alt="Imagen" width="200"><br>' : '') + 
@@ -116,7 +61,7 @@ function openModal(latlng, marker, isEdit = false) {
 
   document.getElementById('image-file').value = '';
   document.getElementById('image-description').value = isEdit ? marker.description || '' : '';
-  document.getElementById('image-date').value = isEdit ? marker.date || '' : '';
+  document.getElementById('image-date').value = isEdit ? marker.date || '';
 
   var closeBtn = document.getElementsByClassName("close")[0];
   closeBtn.onclick = function() {
@@ -160,7 +105,7 @@ function closeModal(marker) {
   if (!hasContent(marker)) {
     removeMarker(marker);
   }
-  saveMarkers(); // Guardar localmente y en Firebase
+  saveMarkers();
 }
 
 function handleDragOver(event) {
@@ -183,7 +128,7 @@ function handleFileDrop(event, marker) {
   if (file && file.type.startsWith('image/')) {
     readFile(file, function(result) {
       marker.image = result;
-      saveMarkers(); // Guardar localmente y en Firebase
+      saveMarkers();
     });
   }
 }
@@ -193,7 +138,7 @@ function handleFileSelect(event, marker) {
   if (file && file.type.startsWith('image/')) {
     readFile(file, function(result) {
       marker.image = result;
-      saveMarkers(); // Guardar localmente y en Firebase
+      saveMarkers();
     });
   }
 }
@@ -215,7 +160,7 @@ window.editMarker = function(markerId) {
 
 function removeMarker(marker) {
   map.removeLayer(marker);
-  saveMarkers(); // Guardar localmente y en Firebase
+  saveMarkers();
 }
 
 function updateMarkerPopup(latlng, marker) {
@@ -233,4 +178,27 @@ function hasContent(marker) {
   return marker.image || marker.description || marker.date;
 }
 
+function saveMarkers() {
+  var markers = [];
+  map.eachLayer(function(layer) {
+    if (layer instanceof L.Marker) {
+      markers.push({
+        latlng: layer.getLatLng(),
+        image: layer.image,
+        description: layer.description,
+        date: layer.date
+      });
+    }
+  });
+  localStorage.setItem('markers', JSON.stringify(markers));
+}
+
+function loadMarkers() {
+  var markers = JSON.parse(localStorage.getItem('markers')) || [];
+  markers.forEach(function(markerData) {
+    addMarker(markerData.latlng, markerData.image, markerData.description, markerData.date);
+  });
+}
+
+loadMarkers();
 
