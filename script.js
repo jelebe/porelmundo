@@ -1,11 +1,9 @@
-// Inicializar el mapa
 var map = L.map('map').setView([0, 0], 2);
 
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
   attribution: '© OpenStreetMap contributors'
 }).addTo(map);
 
-// Manejar el doble clic en el mapa para agregar un marcador
 map.on('dblclick', function(e) {
   var lat = e.latlng.lat;
   var lng = e.latlng.lng;
@@ -19,28 +17,32 @@ function addMarker(latlng, image = null, description = null, date = null) {
   marker.date = date;
 
   marker.on('click', function() {
-    showMarkerDetails(marker);
+    if (hasContent(marker)) {
+      showMarkerMenu(latlng, marker);
+    } else {
+      openModal(latlng, marker);
+    }
+  });
+
+  marker.on('popupclose', function() {
+    if (!hasContent(marker)) {
+      removeMarker(marker);
+    }
   });
 
   saveMarkers();
 }
 
-function showMarkerDetails(marker) {
-  var content = '';
-  if (marker.image) {
-    content += '<img src="' + marker.image + '" alt="Imagen" width="200"><br>';
-  }
-  if (marker.description) {
-    content += '<p>' + marker.description + '</p>';
-  }
-  if (marker.date) {
-    content += '<p class="marker-date">' + marker.date + '</p>';
-  }
-
-  content += '<button class="edit-marker-btn" onclick="editMarker(' + marker._leaflet_id + ')">Modificar</button>';
-  content += '<button class="delete-marker-btn" onclick="deleteMarker(' + marker._leaflet_id + ')">Borrar</button>';
-
-  marker.bindPopup(content).openPopup();
+function showMarkerMenu(latlng, marker) {
+  var popupContent = (marker.date ? '<p class="marker-date">' + marker.date + '</p><br>' : '') +
+                     (marker.image ? '<img src="' + marker.image + '" alt="Imagen" width="200"><br>' : '') + 
+                     (marker.description ? '<p>' + marker.description + '</p><br>' : '') +
+                     '<button class="edit-marker-btn" onclick="editMarker(' + marker._leaflet_id + ')">✎</button>' +
+                     '<button class="delete-marker-btn" onclick="deleteMarker(' + marker._leaflet_id + ')">✖</button>';
+  L.popup()
+    .setLatLng(latlng)
+    .setContent(popupContent)
+    .openOn(map);
 }
 
 window.deleteMarker = function(markerId) {
@@ -48,11 +50,106 @@ window.deleteMarker = function(markerId) {
   if (marker) {
     var confirmation = confirm("¿Estás seguro de que quieres borrar este marcador?");
     if (confirmation) {
-      map.removeLayer(marker);
-      saveMarkers();
+      removeMarker(marker);
     }
   }
 };
+
+function openModal(latlng, marker, isEdit = false) {
+  var modal = document.getElementById('modal');
+  modal.style.display = "block";
+
+  document.getElementById('image-file').value = '';
+  document.getElementById('image-description').value = isEdit ? marker.description || '' : '';
+  document.getElementById('image-date').value = isEdit ? marker.date || '' : '';
+
+  var closeBtn = document.getElementsByClassName("close")[0];
+  closeBtn.onclick = function() {
+    closeModal(marker);
+  };
+
+  var form = document.getElementById('image-form');
+  form.onsubmit = function(event) {
+    event.preventDefault();
+    var imageDescription = document.getElementById('image-description').value;
+    var imageDate = document.getElementById('image-date').value;
+    if (marker.image || imageDescription) {
+      marker.description = imageDescription;
+      marker.date = imageDate;
+      updateMarkerPopup(latlng, marker);
+    }
+    closeModal(marker);
+  };
+
+  window.onclick = function(event) {
+    if (event.target == modal) {
+      closeModal(marker);
+    }
+  };
+
+  var dropArea = document.getElementById('drop-area');
+  dropArea.addEventListener('dragover', handleDragOver);
+  dropArea.addEventListener('dragleave', handleDragLeave);
+  dropArea.addEventListener('drop', function(event) {
+    handleFileDrop(event, marker);
+  });
+
+  document.getElementById('image-file').addEventListener('change', function(event) {
+    handleFileSelect(event, marker);
+  });
+}
+
+function closeModal(marker) {
+  var modal = document.getElementById('modal');
+  modal.style.display = "none";
+  if (!hasContent(marker)) {
+    removeMarker(marker);
+  }
+  saveMarkers();
+}
+
+function handleDragOver(event) {
+  event.preventDefault();
+  event.target.classList.add('dragover');
+  document.getElementById('drag-confirmation').style.display = 'block';
+}
+
+function handleDragLeave(event) {
+  event.preventDefault();
+  event.target.classList.remove('dragover');
+  document.getElementById('drag-confirmation').style.display = 'none';
+}
+
+function handleFileDrop(event, marker) {
+  event.preventDefault();
+  event.target.classList.remove('dragover');
+  document.getElementById('drag-confirmation').style.display = 'none';
+  var file = event.dataTransfer.files[0];
+  if (file && file.type.startsWith('image/')) {
+    readFile(file, function(result) {
+      marker.image = result;
+      saveMarkers();
+    });
+  }
+}
+
+function handleFileSelect(event, marker) {
+  var file = event.target.files[0];
+  if (file && file.type.startsWith('image/')) {
+    readFile(file, function(result) {
+      marker.image = result;
+      saveMarkers();
+    });
+  }
+}
+
+function readFile(file, callback) {
+  var reader = new FileReader();
+  reader.onload = function(event) {
+    callback(event.target.result);
+  };
+  reader.readAsDataURL(file);
+}
 
 window.editMarker = function(markerId) {
   var marker = map._layers[markerId];
@@ -61,74 +158,20 @@ window.editMarker = function(markerId) {
   }
 };
 
-function openModal(latlng, marker, isEdit = false) {
-  var modal = document.getElementById('modal');
-  modal.style.display = "block";
-
-  // Obtener elementos del formulario
-  var imageInput = document.getElementById('image-file');
-  var descriptionInput = document.getElementById('image-description');
-  var dateInput = document.getElementById('image-date');
-  var form = document.getElementById('image-form');
-
-  // Si estamos editando, rellenamos los campos con la información existente
-  if (isEdit) {
-    descriptionInput.value = marker.description || '';
-    dateInput.value = marker.date || '';
-    imageInput.value = ''; // Vaciar el campo de imagen para evitar conflictos
-  } else {
-    // Si es un nuevo marcador, limpiamos los campos
-    descriptionInput.value = '';
-    dateInput.value = '';
-    imageInput.value = '';
-  }
-
-  // Manejar el cierre del modal
-  var closeBtn = document.getElementsByClassName("close")[0];
-  closeBtn.onclick = function() {
-    closeModal();
-  };
-
-  window.onclick = function(event) {
-    if (event.target == modal) {
-      closeModal();
-    }
-  };
-
-  // Manejar el envío del formulario
-  form.onsubmit = function(event) {
-    event.preventDefault();
-    var imageFile = imageInput.files[0];
-
-    if (imageFile && imageFile.type.startsWith('image/')) {
-      var reader = new FileReader();
-      reader.onload = function(e) {
-        marker.image = e.target.result;
-        updateMarkerData(marker);
-      };
-      reader.readAsDataURL(imageFile);
-    } else {
-      // Si no se seleccionó una nueva imagen, mantenemos la existente
-      if (!isEdit) {
-        alert("Por favor, selecciona una imagen.");
-        return;
-      }
-      updateMarkerData(marker);
-    }
-  };
-
-  function updateMarkerData(marker) {
-    marker.description = descriptionInput.value;
-    marker.date = dateInput.value;
-    showMarkerDetails(marker);
-    closeModal();
-    saveMarkers();
-  }
+function removeMarker(marker) {
+  map.removeLayer(marker);
+  saveMarkers();
 }
 
-function closeModal() {
-  var modal = document.getElementById('modal');
-  modal.style.display = "none";
+function updateMarkerPopup(latlng, marker) {
+  L.popup()
+    .setLatLng(latlng)
+    .setContent((marker.date ? '<p class="marker-date">' + marker.date + '</p><br>' : '') +
+                (marker.image ? '<img src="' + marker.image + '" alt="Imagen" width="200"><br>' : '') +
+                (marker.description ? '<p>' + marker.description + '</p><br>' : '') +
+                '<button class="edit-marker-btn" onclick="editMarker(' + marker._leaflet_id + ')">✎</button>' +
+                '<button class="delete-marker-btn" onclick="deleteMarker(' + marker._leaflet_id + ')">✖</button>')
+    .openOn(map);
 }
 
 function hasContent(marker) {
@@ -157,5 +200,5 @@ function loadMarkers() {
   });
 }
 
-// Cargar los marcadores al iniciar
 loadMarkers();
+
