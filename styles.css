@@ -49,22 +49,44 @@ body {
 .modal-content {
     background-color: #fefefe;
     margin: 5% auto;
-    padding: 20px;
-    border: 1px solid #888;
+    border: 10px solid white; /* Borde blanco tipo polaroid */
+    border-radius: 5px; /* Esquinas ligeramente redondeadas */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5); /* Sombra para darle un efecto flotante */
     width: 90%; /* Ancho en dispositivos móviles */
     max-width: 500px; /* Ancho máximo para dispositivos grandes */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra para darle un poco de profundidad */
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding-bottom: 40px; /* Espacio para los botones */
+    padding: 0; /* Eliminar el padding extra */
 }
 
-@media (max-width: 600px) {
-    .modal-content {
-        width: 90%; /* Ancho en dispositivos móviles */
-        padding: 10px; /* Reducir el padding en dispositivos móviles */
-    }
+.modal-content img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 0;
+}
+
+.modal-content .description {
+    padding: 10px;
+    text-align: center;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 14px;
+    color: #333;
+}
+
+.modal-content .date {
+    font-size: 12px;
+    color: #777;
+    margin-top: 5px;
+}
+
+.modal-content .buttons {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 15px;
+    padding: 10px;
 }
 
 .close {
@@ -106,83 +128,8 @@ body {
     color: #3399ff;
 }
 
-.form-spacing {
-    margin-bottom: 20px;
-}
-
-.drop-area {
-    border: 2px dashed #ccc;
-    border-radius: 10px;
-    padding: 20px;
-    text-align: center;
-    margin-bottom: 20px;
-    margin-top: 20px; /* Agregar espacio por encima de la sección de imagen */
-}
-
-.drop-area.dragover {
-    border-color: #333;
-    background-color: #f9f9f9;
-}
-
-.drag-confirmation {
-    display: none;
-    color: green;
-    font-weight: bold;
-    margin-top: 10px;
-}
-
-.drop-area.dragover .drag-confirmation {
-    display: block;
-}
-
-/* Título centrado */
-.title {
-    text-align: center;
-    font-family: 'Verdana', sans-serif; /* Cambia la fuente del título aquí */
-    margin-bottom: 20px; /* Espacio debajo del título */
-}
-
-/* Estilo para la fecha del marcador */
-.marker-date {
-    font-size: 12px; /* Tamaño de fuente más pequeño */
-    font-family: 'Courier New', Courier, monospace; /* Cambia la fuente */
-    color: #555; /* Color de texto */
-    margin-bottom: 5px; /* Espacio debajo de la fecha */
-}
-
-/* Estilo de la polaroid */
-.modal-content {
-    border: 10px solid white; /* Borde blanco tipo polaroid */
-    border-radius: 5px; /* Esquinas ligeramente redondeadas */
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5); /* Sombra para darle un efecto flotante */
-    padding: 0; /* Eliminar el padding extra */
-}
-
-.modal-content img {
-    max-width: 100%;
-    height: auto;
-    display: block;
-    margin: 0;
-}
-
-.modal-content .description {
-    padding: 10px;
-    text-align: center;
-    font-family: 'Courier New', Courier, monospace;
-    font-size: 14px;
-    color: #333;
-}
-
-.modal-content .date {
-    font-size: 12px;
-    color: #777;
-    margin-top: 5px;
-}
-
-.modal-content .buttons {
-    display: flex;
-    justify-content: center;
-    gap: 15px;
-    margin-top: 15px;
-    padding: 10px;
+@media (max-width: 600px) {
+    .modal-content {
+        width: 90%; /* Ancho en dispositivos móviles */
+    }
 }
