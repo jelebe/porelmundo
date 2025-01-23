@@ -16,28 +16,19 @@
 <script src="script.js"></script>
 
 <div id="modal" class="modal">
-  <div class="modal-content">
+  <div class="modal-content polaroid">
     <span class="close">&times;</span>
-    <form id="image-form">
-      <div class="form-spacing drop-area" id="drop-area">
-        Arrastra una imagen aquí o selecciona una imagen:
-        <input type="file" id="image-file" accept="image/*">
-        <span id="drag-confirmation" class="drag-confirmation">Imagen arrastrada y lista para subir</span>
-      </div>
-      <div class="form-spacing">
-        <label for="image-description">Descripción:</label>
-        <textarea id="image-description" name="image-description" rows="3" cols="40"></textarea>
-      </div>
-      <div class="form-spacing">
-        <label for="image-date">Fecha:</label>
-        <input type="date" id="image-date" name="image-date">
-      </div>
-      
-      <input type="submit" value="Subir">
-    </form>
+    <img src="ruta-de-tu-imagen.jpg" alt="Imagen" class="modal-image">
+    <div class="modal-description">
+      <p>Descripción de la imagen</p>
+      <p class="modal-date">Fecha</p>
+    </div>
   </div>
+</div>
+<div class="button-container">
+  <button class="edit-marker-btn">Modificar</button>
+  <button class="delete-marker-btn">Borrar</button>
 </div>
 
 </body>
 </html>
-
