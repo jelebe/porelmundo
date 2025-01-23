@@ -1,4 +1,9 @@
-// script.js
+// Inicialización de Supabase
+const SUPABASE_URL = 'https://xwtggolgjirvemmvxjsy.supabase.co';
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inh3dGdnb2xnamlydmVtbXZ4anN5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Mzc1NTQ1MjQsImV4cCI6MjA1MzEzMDUyNH0.dviH9wIFaIpFolnVHEuECslVF6ZwwyqgLGbZvGeSYnA';
+const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+// Mapa
 var map = L.map('map').setView([0, 0], 2);
 
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -99,7 +104,6 @@ function openModal(latlng, marker, isEdit = false) {
     handleFileSelect(event, marker);
   });
 }
-
 function closeModal(marker) {
   var modal = document.getElementById('modal');
   modal.style.display = "none";
@@ -159,46 +163,67 @@ window.editMarker = function(markerId) {
   }
 };
 
-function removeMarker(marker) {
-  map.removeLayer(marker);
-  saveMarkers();
-}
-
-function updateMarkerPopup(latlng, marker) {
-  L.popup()
-    .setLatLng(latlng)
-    .setContent((marker.image ? '<img src="' + marker.image + '" alt="Imagen" width="200"><br>' : '') +
-                (marker.description ? '<p>' + marker.description + '</p><br>' : '') +
-                (marker.date ? '<p class="marker-date">' + marker.date + '</p><br>' : '') +
-                '<button class="edit-marker-btn" onclick="editMarker(' + marker._leaflet_id + ')">✎</button>' +
-                '<button class="delete-marker-btn" onclick="deleteMarker(' + marker._leaflet_id + ')">✖</button>')
-    .openOn(map);
-}
-
-function hasContent(marker) {
-  return marker.image || marker.description || marker.date;
-}
-
-function saveMarkers() {
-  var markers = [];
+// Guardar Marcadores en Supabase
+async function saveMarkers() {
+  const markers = [];
   map.eachLayer(function(layer) {
     if (layer instanceof L.Marker) {
       markers.push({
-        latlng: layer.getLatLng(),
+        lat: layer.getLatLng().lat,
+        lng: layer.getLatLng().lng,
         image: layer.image,
         description: layer.description,
         date: layer.date
       });
     }
   });
-  localStorage.setItem('markers', JSON.stringify(markers));
+
+  const { data, error } = await supabase
+    .from('markers')
+    .insert(markers);
+
+  if (error) {
+    console.error('Error al guardar los marcadores:', error);
+  } else {
+    console.log('Marcadores guardados:', data);
+  }
 }
 
-function loadMarkers() {
-  var markers = JSON.parse(localStorage.getItem('markers')) || [];
+
+// Cargar Marcadores desde Supabase
+async function loadMarkers() {
+  const { data: markers, error } = await supabase
+    .from('markers')
+    .select('*');
+
+  if (error) {
+    console.error('Error al cargar los marcadores:', error);
+    alert('Hubo un error al cargar los marcadores. Por favor, intenta de nuevo más tarde.');
+    return;
+  }
+
   markers.forEach(function(markerData) {
-    addMarker(markerData.latlng, markerData.image, markerData.description, markerData.date);
+    addMarker([markerData.lat, markerData.lng], markerData.image, markerData.description, markerData.date);
   });
 }
 
+// Remover Marcadores desde Supabase
+async function removeMarker(marker) {
+  map.removeLayer(marker);
+
+  const { data, error } = await supabase
+    .from('markers')
+    .delete()
+    .eq('lat', marker.getLatLng().lat)
+    .eq('lng', marker.getLatLng().lng);
+
+  if (error) {
+    console.error('Error al eliminar el marcador:', error);
+  } else {
+    console.log('Marcador eliminado:', data);
+  }
+}
+
+
+// Cargar los marcadores al inicio
 loadMarkers();
