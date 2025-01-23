@@ -74,9 +74,30 @@ document.addEventListener('DOMContentLoaded', (event) => {
         var confirmation = confirm("¿Estás seguro de que quieres borrar este marcador?");
         if (confirmation) {
           removeMarker(marker);
+          deleteMarkerFromFirebase(marker);
         }
       }
     };
+    
+    function deleteMarkerFromFirebase(marker) {
+      const markersRef = dbRef(database, 'markers');
+      onValue(markersRef, (snapshot) => {
+        snapshot.forEach((childSnapshot) => {
+          const childData = childSnapshot.val();
+          const childKey = childSnapshot.key;
+          if (childData.latlng.lat === marker.getLatLng().lat && childData.latlng.lng === marker.getLatLng().lng) {
+            dbRef(database, 'markers/' + childKey).remove()
+              .then(() => {
+                console.log('Marcador eliminado de Firebase');
+              })
+              .catch((error) => {
+                console.error('Error al eliminar el marcador de Firebase: ', error);
+              });
+          }
+        });
+      });
+    }
+    
 
     function openModal(latlng, marker, isEdit = false) {
       var modal = document.getElementById('modal');
@@ -206,6 +227,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
       map.removeLayer(marker);
       saveMarkers();
     }
+    
   
     function updateMarkerPopup(latlng, marker) {
       L.popup()
