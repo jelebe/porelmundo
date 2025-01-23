@@ -1,11 +1,7 @@
 /* Asegurar que el contenedor del mapa y el título estén centrados */
 body {
     font-family: Arial, sans-serif;
-    background-color: #f0f0f0;
-    background-image: url('images/fondo.jpg'); /* Ruta de la imagen de fondo */
-    background-size: cover; /* Ajusta la imagen para cubrir toda la página */
-    background-position: center; /* Centra la imagen de fondo */
-    background-repeat: no-repeat; /* Evita que la imagen se repita */
+    background-color: #f4f4f9; /* Color retro */
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -47,21 +43,48 @@ body {
 }
 
 .modal-content {
-    background-color: #fefefe;
+    background-color: white;
     margin: 5% auto;
     padding: 20px;
     border: 1px solid #888;
-    width: 90%; /* Ancho en dispositivos móviles */
-    max-width: 500px; /* Ancho máximo para dispositivos grandes */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra para darle un poco de profundidad */
-    text-align: center; /* Centrar el contenido del modal */
+    width: 90%;
+    max-width: 500px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    position: relative;
 }
 
 .modal-content img {
     display: block;
-    margin: 0 auto; /* Centrar la imagen dentro del modal */
-    max-width: 100%; /* Asegurar que la imagen no exceda el ancho del modal */
-    height: auto; /* Mantener la proporción de la imagen */
+    margin: 0 auto;
+    max-width: 100%;
+    height: auto;
+    border: 10px solid white; /* Borde blanco */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.polaroid-frame {
+    border: 1px solid white;
+    padding: 10px;
+    background: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    margin-bottom: 20px;
+    position: relative;
+}
+
+/* Estilo para la fecha del marcador */
+.marker-date {
+    font-size: 12px;
+    font-family: 'Patrick Hand', cursive; /* Fuente manuscrita */
+    color: #555;
+    margin-bottom: 5px;
+    text-align: center;
+    display: block;
+    position: absolute;
+    bottom: -20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
 }
 
 @media (max-width: 600px) {
@@ -144,14 +167,4 @@ body {
     text-align: center;
     font-family: 'Verdana', sans-serif; /* Cambia la fuente del título aquí */
     margin-bottom: 20px; /* Espacio debajo del título */
-}
-
-/* Estilo para la fecha del marcador */
-.marker-date {
-    font-size: 12px; /* Tamaño de fuente más pequeño */
-    font-family: 'Courier New', Courier, monospace; /* Cambia la fuente */
-    color: #555; /* Color de texto */
-    margin-bottom: 5px; /* Espacio debajo de la fecha */
-    text-align: center; /* Centrar el texto */
-    display: block; /* Asegura que el texto se comporte como un bloque */
 }
