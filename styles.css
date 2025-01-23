@@ -276,7 +276,7 @@ button[type="submit"]:hover {
     font-size: 14px;
     color: #333;
     margin-bottom: 3px; /* Espacio entre la descripción y la fecha */
-    text-align: center; /* Centrar el texto */
+    position: absolute; /* Centrar el texto */
     width: 100%;        /* Asegura que el elemento tome todo el ancho disponible */
     margin: 1 auto;     /* Centrar el elemento en su contenedor */
 }
@@ -284,7 +284,7 @@ button[type="submit"]:hover {
 .polaroid .date {
     font-size: 12px;
     color: #777;
-    text-align: center; /* Centrar el texto */
+    position: absolute;/* Centrar el texto */
     width: 100%;        /* Asegura que el elemento tome todo el ancho disponible */
     margin: 1 auto;     /* Centrar el elemento en su contenedor */
 }
