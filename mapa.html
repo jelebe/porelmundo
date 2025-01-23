@@ -12,39 +12,32 @@
 <h3 class="title">Besos por el Mundo</h3>
 <div id="map"></div>
 
-<!-- Modal -->
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+<script src="script.js"></script>
+
 <div id="modal" class="modal">
-  <div class="modal-content polaroid">
+  <div class="modal-content">
     <span class="close">&times;</span>
     <form id="image-form">
-      <!-- Imagen -->
-      <div class="form-group">
-        <label for="image-file">Selecciona una imagen:</label>
+      <div class="form-spacing drop-area" id="drop-area">
+        Arrastra una imagen aquí o selecciona una imagen:
         <input type="file" id="image-file" accept="image/*">
+        <span id="drag-confirmation" class="drag-confirmation">Imagen arrastrada y lista para subir</span>
       </div>
-      <!-- Descripción -->
-      <div class="form-group">
+      <div class="form-spacing">
         <label for="image-description">Descripción:</label>
-        <textarea id="image-description" name="image-description" rows="3" cols="30"></textarea>
+        <textarea id="image-description" name="image-description" rows="3" cols="40"></textarea>
       </div>
-      <!-- Fecha -->
-      <div class="form-group">
+      <div class="form-spacing">
         <label for="image-date">Fecha:</label>
         <input type="date" id="image-date" name="image-date">
       </div>
-      <!-- Botón de Subir -->
-      <input type="submit" value="Subir" class="submit-btn">
+      
+      <input type="submit" value="Subir">
     </form>
   </div>
 </div>
 
-<!-- Botones fuera del modal -->
-<div class="button-container">
-  <button class="edit-marker-btn">Modificar</button>
-  <button class="delete-marker-btn">Borrar</button>
-</div>
-
-<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-<script src="script.js"></script>
 </body>
 </html>
+
