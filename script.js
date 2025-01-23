@@ -79,14 +79,16 @@ document.addEventListener('DOMContentLoaded', (event) => {
       }
     };
     
+    
     function deleteMarkerFromFirebase(marker) {
       const markersRef = dbRef(database, 'markers');
       onValue(markersRef, (snapshot) => {
         snapshot.forEach((childSnapshot) => {
           const childData = childSnapshot.val();
           const childKey = childSnapshot.key;
-          if (childData.latlng.lat === marker.getLatLng().lat && childData.latlng.lng === marker.getLatLng().lng) {
-            dbRef(database, 'markers/' + childKey).remove()
+          if (childData.latlng && childData.latlng.lat === marker.getLatLng().lat && childData.latlng.lng === marker.getLatLng().lng) {
+            const specificRef = dbRef(database, 'markers/' + childKey);
+            remove(specificRef)
               .then(() => {
                 console.log('Marcador eliminado de Firebase');
               })
@@ -97,6 +99,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
         });
       });
     }
+    
     
 
     function openModal(latlng, marker, isEdit = false) {
