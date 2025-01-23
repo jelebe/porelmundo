@@ -1,22 +1,9 @@
-import { initializeApp } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-app.js";
-import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-storage.js";
-import { getDatabase, ref as dbRef, push, onValue } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-database.js";
+// script.js
+import { storage, database } from './firebase-init.js';
+import { ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-storage.js";
+import { ref as dbRef, push, onValue } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-database.js";
 
 document.addEventListener('DOMContentLoaded', (event) => {
-  // Inicializa Firebase
-  const firebaseConfig = {
-    apiKey: "AIzaSyCLHKZmeUUahOD9pCG9HGRed9zxwP5vHb0",
-    authDomain: "besosporelmundo.firebaseapp.com",
-    projectId: "besosporelmundo",
-    storageBucket: "besosporelmundo.firebasestorage.app",
-    messagingSenderId: "716617534132",
-    appId: "1:716617534132:web:77b9372971f803fcdd25e1"
-  };
-
-  const app = initializeApp(firebaseConfig);
-  const storage = getStorage(app);
-  const database = getDatabase(app);
-
   var map = L.map('map').setView([0, 0], 2);
 
   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -208,7 +195,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
     return marker.image || marker.description || marker.date;
   }
 
-  function saveMarkers() {
+    function saveMarkers() {
     var markers = [];
     map.eachLayer(function(layer) {
       if (layer instanceof L.Marker) {
