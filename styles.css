@@ -176,3 +176,65 @@ button[type="submit"]:hover {
         padding: 8px; /* Ajustar el padding del botón para pantallas pequeñas */
     }
 }
+
+/* Estilos del contenedor de inicio de sesión */
+.login-container {
+    width: 100%;
+    max-width: 400px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: rgba(255, 235, 238, 0.9); /* Fondo semitransparente rosado */
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra para efecto flotante */
+    text-align: center;
+}
+
+/* Estilos del título */
+.login-container h2 {
+    margin-bottom: 20px;
+    font-size: 24px;
+    color: #ff577f; /* Color rosado */
+}
+
+/* Estilos de las etiquetas */
+.login-container label {
+    display: block;
+    margin-bottom: 10px;
+    font-size: 16px;
+    color: #333; /* Color de texto más oscuro */
+}
+
+/* Estilos de los campos de entrada */
+.login-container input[type="text"],
+.login-container input[type="password"] {
+    width: calc(100% - 20px);
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+    font-size: 16px;
+}
+
+/* Estilos del botón */
+.login-container button {
+    width: 100%;
+    padding: 10px;
+    background-color: #ff99a3; /* Color rosado */
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.login-container button:hover {
+    background-color: #ff6675; /* Color rosado más oscuro */
+}
+
+/* Estilos del mensaje de error */
+#error-message {
+    color: #ff6675; /* Color rosado más oscuro */
+    font-size: 14px;
+    margin-top: 10px;
+}
