@@ -254,12 +254,6 @@ button[type="submit"]:hover {
 }
 
 /* Estilos del contenedor tipo polaroid */
-.polaroid .description,
-.polaroid .date {
-    font-family: 'Hurricane', cursive; /* Aplicar la nueva fuente */
-    text-align: center; /* Centrar el texto */
-}
-
 .polaroid {
     width: 300px; /* Ajusta el ancho según tus necesidades */
     background-color: white;
