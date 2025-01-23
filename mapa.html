@@ -12,23 +12,39 @@
 <h3 class="title">Besos por el Mundo</h3>
 <div id="map"></div>
 
-<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-<script src="script.js"></script>
-
+<!-- Modal -->
 <div id="modal" class="modal">
   <div class="modal-content polaroid">
     <span class="close">&times;</span>
-    <img src="ruta-de-tu-imagen.jpg" alt="Imagen" class="modal-image">
-    <div class="modal-description">
-      <p>Descripción de la imagen</p>
-      <p class="modal-date">Fecha</p>
-    </div>
+    <form id="image-form">
+      <!-- Imagen -->
+      <div class="form-group">
+        <label for="image-file">Selecciona una imagen:</label>
+        <input type="file" id="image-file" accept="image/*">
+      </div>
+      <!-- Descripción -->
+      <div class="form-group">
+        <label for="image-description">Descripción:</label>
+        <textarea id="image-description" name="image-description" rows="3" cols="30"></textarea>
+      </div>
+      <!-- Fecha -->
+      <div class="form-group">
+        <label for="image-date">Fecha:</label>
+        <input type="date" id="image-date" name="image-date">
+      </div>
+      <!-- Botón de Subir -->
+      <input type="submit" value="Subir" class="submit-btn">
+    </form>
   </div>
 </div>
+
+<!-- Botones fuera del modal -->
 <div class="button-container">
   <button class="edit-marker-btn">Modificar</button>
   <button class="delete-marker-btn">Borrar</button>
 </div>
 
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+<script src="script.js"></script>
 </body>
 </html>
