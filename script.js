@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
   const firebaseConfig = {
     apiKey: "AIzaSyCLHKZmeUUahOD9pCG9HGRed9zxwP5vHb0",
     authDomain: "besosporelmundo.firebaseapp.com",
-    databaseURL: "https://besosporelmundo-default-rtdb.europe-west1.firebasedatabase.app/",
+    databaseURL: "https://besosporelmundo-default-rtdb.europe-west1.firebasedatabase.app",
     projectId: "besosporelmundo",
     storageBucket: "besosporelmundo.firebasestorage.app",
     messagingSenderId: "716617534132",
@@ -74,33 +74,9 @@ document.addEventListener('DOMContentLoaded', (event) => {
         var confirmation = confirm("¿Estás seguro de que quieres borrar este marcador?");
         if (confirmation) {
           removeMarker(marker);
-          deleteMarkerFromFirebase(marker);
         }
       }
     };
-    
-    
-    function deleteMarkerFromFirebase(marker) {
-      const markersRef = dbRef(database, 'markers');
-      onValue(markersRef, (snapshot) => {
-        snapshot.forEach((childSnapshot) => {
-          const childData = childSnapshot.val();
-          const childKey = childSnapshot.key;
-          if (childData.latlng && childData.latlng.lat === marker.getLatLng().lat && childData.latlng.lng === marker.getLatLng().lng) {
-            const specificRef = dbRef(database, 'markers/' + childKey);
-            remove(specificRef)
-              .then(() => {
-                console.log('Marcador eliminado de Firebase');
-              })
-              .catch((error) => {
-                console.error('Error al eliminar el marcador de Firebase: ', error);
-              });
-          }
-        });
-      });
-    }
-    
-    
 
     function openModal(latlng, marker, isEdit = false) {
       var modal = document.getElementById('modal');
@@ -203,11 +179,11 @@ document.addEventListener('DOMContentLoaded', (event) => {
     function handleFileSelect(event, marker) {
       var file = event.target.files[0];
       if (file && file.type.startsWith('image/')) {
+        // Sube la imagen a Firebase Storage
         var storageRef = ref(storage, 'images/' + file.name);
         uploadBytes(storageRef, file).then((snapshot) => {
-          console.log('Imagen subida:', snapshot);
+          // Obtén la URL de descarga de la imagen
           getDownloadURL(snapshot.ref).then((url) => {
-            console.log('URL de descarga:', url);
             marker.image = url; // Almacena la URL en el marcador
             saveMarkers();
           }).catch((error) => {
@@ -218,7 +194,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
         });
       }
     }
-    
     window.editMarker = function(markerId) {
       var marker = map._layers[markerId];
       if (marker) {
@@ -230,7 +205,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
       map.removeLayer(marker);
       saveMarkers();
     }
-    
   
     function updateMarkerPopup(latlng, marker) {
       L.popup()
@@ -243,13 +217,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
         .openOn(map);
     }
   
-
-
-
-
-
-
-    
     function hasContent(marker) {
       return marker.image || marker.description || marker.date;
     }
