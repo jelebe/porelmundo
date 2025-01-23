@@ -1,7 +1,4 @@
-// Inicialización de Supabase
-const SUPABASE_URL = 'https://xwtggolgjirvemmvxjsy.supabase.co';
-const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inh3dGdnb2xnamlydmVtbXZ4anN5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Mzc1NTQ1MjQsImV4cCI6MjA1MzEzMDUyNH0.dviH9wIFaIpFolnVHEuECslVF6ZwwyqgLGbZvGeSYnA';
-const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
 
 // Mapa
 var map = L.map('map').setView([0, 0], 2);
