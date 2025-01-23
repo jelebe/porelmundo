@@ -20,7 +20,7 @@ body {
     max-width: 800px; /* Ajusta el ancho máximo según tus necesidades */
     padding: 20px;
     text-align: center;
-    flex-grow: 0; /* Permitir que el contenedor crezca */
+    flex-grow: 1; /* Permitir que el contenedor crezca */
 }
 
 /* Estilos del mapa */
