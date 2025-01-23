@@ -17,7 +17,7 @@ body {
 /* Contenedor para centrar el contenido */
 .container {
     width: 100%;
-    max-width: 800px; /* Ajusta el ancho máximo según tus necesidades */
+    max-width: 1600px; /* Ajusta el ancho máximo según tus necesidades */
     padding: 20px;
     text-align: center;
     flex-grow: 1; /* Permitir que el contenedor crezca */
