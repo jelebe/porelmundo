@@ -1,5 +1,3 @@
-@import url('https://fonts.cdnfonts.com/css/best-signature-font');
-
 /* Asegurar que el contenedor del mapa y el título estén centrados */
 body {
     font-family: Arial, sans-serif;
@@ -249,4 +247,49 @@ button[type="submit"]:hover {
 }
 
 /* Estilos del mensaje de error */
-#error[_{{{CITATION{{{_1{](https://github.com/la9una/web/tree/ba1073ae044ebb7b538a3b13f0f9598f7c410bb6/docs%2Fbootstrap%2Falignci.md)[_{{{CITATION{{{_2{](https://github.com/Alefrankie/Miranda/tree/8e6197eb99daa5f79524b0363e52c7b6d5e34c9b/app%2Fviews%2Ftemplates%2Fusuarios%2Flogin.php)[_{{{CITATION{{{_3{](https://github.com/angeldavid06/gestor_de_archivos/tree/ca6e8bac430129589557a48e7f74fd91d9143739/index.php)
+#error-message {
+    color: #ff6675; /* Color rosado más oscuro */
+    font-size: 14px;
+    margin-top: 10px;
+}
+
+
+@import url('https://fonts.googleapis.com/css2?family=Hurricane&display=swap');
+
+/* Estilos del contenedor tipo polaroid */
+.polaroid .description,
+.polaroid .date {
+    font-family: 'Hurricane', cursive; /* Aplicar la nueva fuente */
+    text-align: center; /* Centrar el texto */
+}
+
+.polaroid {
+    width: 300px; /* Ajusta el ancho según tus necesidades */
+    background-color: white;
+    padding: 10px;
+    border: 10px solid white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra para efecto flotante */
+    border-radius: 5px;
+    text-align: center;
+    margin: 20px auto;
+}
+
+.polaroid img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin-bottom: 10px; /* Espacio entre la imagen y la descripción */
+}
+
+.polaroid .description {
+    font-family: 'Hurricane', cursive; /* Aplicar la nueva fuente */
+    font-size: 14px;
+    color: #333;
+    margin-bottom: 10px; /* Espacio entre la descripción y la fecha */
+}
+
+.polaroid .date {
+    font-family: 'Hurricane', cursive; /* Aplicar la nueva fuente */
+    font-size: 12px;
+    color: #777;
+}
