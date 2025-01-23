@@ -1,7 +1,15 @@
-/* Asegurar que el contenedor del mapa y el título estén centrados */
+/* Variables CSS */
+:root {
+    --primary-color: #ff99a3;
+    --secondary-color: #ff6675;
+    --background-color: #ffe6e6;
+    --text-color: #333;
+    --border-radius: 5px;
+}
+
 body {
     font-family: Arial, sans-serif;
-    background-color: #f0f0f0;
+    background-color: var(--background-color);
     background-image: url('images/fondo.jpg'); /* Ruta de la imagen de fondo */
     background-size: cover; /* Ajusta la imagen para cubrir toda la página */
     background-position: center; /* Centra la imagen de fondo */
@@ -51,7 +59,7 @@ body {
     margin: 5% auto;
     padding: 20px;
     border: 1px solid #ddd;
-    border-radius: 5px;
+    border-radius: var(--border-radius);
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* Sombra para efecto flotante */
     width: 90%;
     max-width: 500px;
@@ -62,11 +70,11 @@ body {
 
 /* Área de arrastre */
 .drop-area {
-    border: 2px dashed #ffcccb;
-    border-radius: 5px;
+    border: 2px dashed var(--primary-color);
+    border-radius: var(--border-radius);
     padding: 20px;
     text-align: center;
-    background-color: #ffe6e6;
+    background-color: var(--background-color);
     margin-bottom: 20px;
     width: calc(100% - 40px);
 }
@@ -76,11 +84,11 @@ body {
     display: block;
     margin-top: 10px;
     font-size: 14px;
-    color: #333;
+    color: var(--text-color);
 }
 
 .drop-area:hover {
-    border-color: #ff99a3;
+    border-color: var(--secondary-color);
 }
 
 /* Estilos del botón de selección */
@@ -91,17 +99,17 @@ input[type="file"] {
 label {
     display: inline-block;
     padding: 10px 20px;
-    background-color: #ff99a3; /* Color rosa */
+    background-color: var(--primary-color);
     color: #fff;
     border: none;
-    border-radius: 5px;
+    border-radius: var(--border-radius);
     cursor: pointer;
     text-align: center;
     margin-top: 10px;
 }
 
 label:hover {
-    background-color: #ff6675; /* Color rosa más oscuro */
+    background-color: var(--secondary-color);
 }
 
 /* Estilos del campo de descripción */
@@ -109,15 +117,15 @@ textarea, input[type="date"] {
     width: calc(100% - 20px);
     padding: 10px;
     border: 1px solid #ccc;
-    border-radius: 5px;
+    border-radius: var(--border-radius);
     box-sizing: border-box;
     margin-bottom: 20px;
     background-color: #f9f9f9;
-    color: #333; /* Color de texto más oscuro */
+    color: var(--text-color);
 }
 
 textarea:focus, input[type="date"]:focus {
-    border-color: #ff99a3;
+    border-color: var(--primary-color);
 }
 
 /* Estilos del botón de subir */
@@ -125,17 +133,17 @@ button[type="submit"] {
     display: block;
     width: 100%;
     padding: 10px;
-    background-color: #ff99a3; /* Color rosa */
+    background-color: var(--primary-color);
     color: #fff;
     border: none;
-    border-radius: 5px;
+    border-radius: var(--border-radius);
     cursor: pointer;
     text-align: center;
     margin-top: 20px;
 }
 
 button[type="submit"]:hover {
-    background-color: #ff6675; /* Color rosa más oscuro */
+    background-color: var(--secondary-color);
 }
 
 /* Ajustes para dispositivos móviles */
@@ -157,38 +165,35 @@ button[type="submit"]:hover {
         width: auto;
     }
 
-    /* Ajustes para dispositivos móviles */
-@media (max-width: 500px) {
     .login-container {
         width: 90%;
-        max-width: 280px; /* Reducir el ancho máximo */
-        padding: 10px; /* Reducir el padding */
+        max-width: 280px;
+        padding: 10px;
     }
 
     .login-container h2 {
-        font-size: 20px; /* Reducir el tamaño de fuente del título */
+        font-size: 20px;
     }
 
     .login-container label {
-        font-size: 14px; /* Reducir el tamaño de fuente de las etiquetas */
+        font-size: 14px;
     }
 
     .login-container input[type="text"],
     .login-container input[type="password"] {
-        width: calc(100% - 16px); /* Reducir el ancho */
-        padding: 8px; /* Reducir el padding */
-        font-size: 14px; /* Reducir el tamaño de fuente */
+        width: calc(100% - 16px);
+        padding: 8px;
+        font-size: 14px;
     }
 
     .login-container button {
-        padding: 8px; /* Reducir el padding */
-        font-size: 14px; /* Reducir el tamaño de fuente */
+        padding: 8px;
+        font-size: 14px;
     }
 
     #error-message {
-        font-size: 12px; /* Reducir el tamaño de fuente del mensaje de error */
+        font-size: 12px;
     }
-}
 }
 
 /* Estilos del contenedor de inicio de sesión */
@@ -197,90 +202,12 @@ button[type="submit"]:hover {
     max-width: 300px;
     margin: 40px auto;
     padding: 15px;
-    background-color: rgba(255, 235, 238, 0.9); /* Fondo semitransparente rosado */
-    border-radius: 9px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra para efecto flotante */
+    background-color: rgba(255, 235, 238, 0.9);
+    border-radius: var(--border-radius);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     text-align: center;
 }
 
 /* Estilos del título */
 .login-container h2 {
-    margin-bottom: 20px;
-    font-size: 24px;
-    color: #ff577f; /* Color rosado */
-}
-
-/* Estilos de las etiquetas */
-.login-container label {
-    display: block;
-    margin-bottom: 10px;
-    font-size: 16px;
-    color: #333; /* Color de texto más oscuro */
-}
-
-/* Estilos de los campos de entrada */
-.login-container input[type="text"],
-.login-container input[type="password"] {
-    width: calc(100% - 20px);
-    padding: 10px;
-    margin-bottom: 20px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    box-sizing: border-box;
-    font-size: 16px;
-}
-
-/* Estilos del botón */
-.login-container button {
-    width: 100%;
-    padding: 10px;
-    background-color: #ff99a3; /* Color rosado */
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 16px;
-}
-
-.login-container button:hover {
-    background-color: #ff6675; /* Color rosado más oscuro */
-}
-
-/* Estilos del mensaje de error */
-#error-message {
-    color: #ff6675; /* Color rosado más oscuro */
-    font-size: 14px;
-    margin-top: 10px;
-}
-
-/* Estilos del contenedor tipo polaroid */
-.polaroid {
-    width: 300px; /* Ajusta el ancho según tus necesidades */
-    background-color: white;
-    padding: 10px;
-    border: 10px solid white;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra para efecto flotante */
-    border-radius: 5px;
-    text-align: center;
-    margin: 20px auto;
-}
-
-.polaroid img {
-    max-width: 100%;
-    height: auto;
-    display: block;
-    margin-bottom: 10px; /* Espacio entre la imagen y la descripción */
-}
-
-.polaroid .description {
-    font-family: "Hurricane", serif; /* Aplicar la nueva fuente */
-    font-size: 14px;
-    color: #333;
-    margin-bottom: 10px; /* Espacio entre la descripción y la fecha */
-}
-
-.polaroid .date {
-    font-family: "Hurricane", serif; /* Aplicar la nueva fuente */
-    font-size: 12px;
-    color: #777;
-}
+[_{{{CITATION{{{_1{](https://github.com/la9una/web/tree/ba1073ae044ebb7b538a3b13f0f9598f7c410bb6/docs%2Fbootstrap%2Falignci.md)[_{{{CITATION{{{_2{](https://github.com/Alefrankie/Miranda/tree/8e6197eb99daa5f79524b0363e52c7b6d5e34c9b/app%2Fviews%2Ftemplates%2Fusuarios%2Flogin.php)[_{{{CITATION{{{_3{](https://github.com/angeldavid06/gestor_de_archivos/tree/ca6e8bac430129589557a48e7f74fd91d9143739/index.php)
