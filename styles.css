@@ -44,6 +44,13 @@ body {
     overflow: auto;
     background-color: rgba(0, 0, 0, 0.4); /* Fondo semitransparente */
     padding-top: 60px;
+    transition: opacity 0.3s ease; /* Transición de opacidad */
+    opacity: 0; /* Inicialmente invisible */
+}
+
+.modal.show {
+    display: block;
+    opacity: 1; /* Visible cuando se muestra */
 }
 
 .modal-content {
@@ -54,6 +61,7 @@ body {
     width: 90%; /* Ancho en dispositivos móviles */
     max-width: 500px; /* Ancho máximo para dispositivos grandes */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra para darle un poco de profundidad */
+    text-align: center;
 }
 
 @media (max-width: 600px) {
@@ -144,4 +152,38 @@ body {
     font-family: 'Courier New', Courier, monospace; /* Cambia la fuente */
     color: #555; /* Color de texto */
     margin-bottom: 5px; /* Espacio debajo de la fecha */
+}
+
+/* Estilo para la apariencia de polaroid */
+.polaroid {
+    background-color: white;
+    padding: 10px 10px 20px; /* Ajusta el padding para que se vea como una polaroid */
+    border: 1px solid #ccc;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3); /* Sombra más suave */
+    text-align: center;
+}
+
+.modal-image {
+    width: 100%; /* Ajusta la imagen al ancho de la polaroid */
+    max-width: 100%; /* Asegura que la imagen no exceda el contenedor */
+    border: 2px solid #fff; /* Borde blanco alrededor de la imagen */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra ligera para resaltar la imagen */
+}
+
+.modal-description p {
+    font-family: 'Arial', sans-serif;
+    color: #333;
+    margin: 5px 0;
+}
+
+.modal-date {
+    font-family: 'Courier New', Courier, monospace;
+    color: #777; /* Un color más suave para la fecha */
+}
+
+/* Contenedor de los botones */
+.button-container {
+    margin-top: 10px;
+    text-align: center;
+    margin-top: 20px; /* Incrementar el margen superior */
 }
