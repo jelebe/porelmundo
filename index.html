@@ -1,45 +1,32 @@
 <!DOCTYPE html>
 <html lang="es">
 
-<script type="module">
-    // Import the functions you need from the SDKs you need
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-app.js";
-    // TODO: Add SDKs for Firebase products that you want to use
-    // https://firebase.google.com/docs/web/setup#available-libraries
-  
-    // Your web app's Firebase configuration
-    const firebaseConfig = {
-      apiKey: "AIzaSyCLHKZmeUUahOD9pCG9HGRed9zxwP5vHb0",
-      authDomain: "besosporelmundo.firebaseapp.com",
-      projectId: "besosporelmundo",
-      storageBucket: "besosporelmundo.firebasestorage.app",
-      messagingSenderId: "716617534132",
-      appId: "1:716617534132:web:77b9372971f803fcdd25e1"
-    };
-  
-    // Initialize Firebase
-    const app = initializeApp(firebaseConfig);
-  </script>
-  
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Iniciar Sesión</title>
-    <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap">  <!-- Añadir el enlace a Google Fonts -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Iniciar Sesión</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" /> <!-- Importar Leaflet CSS -->
 </head>
+
 <body>
-    <div class="login-container">
-        <h2>Iniciar Sesión</h2>
-        <form id="login-form">
-            <label for="username">Usuario</label>
-            <input type="text" id="username" name="username" required>
-            <label for="password">Contraseña</label>
-            <input type="password" id="password" name="password" required>
-            <button type="submit">Entrar</button>
-        </form>
-        <p id="error-message"></p>
-    </div>
-    <script src="login.js"></script>
+  <div class="login-container">
+    <h2>Iniciar Sesión</h2>
+    <form id="login-form">
+      <label for="username">Usuario</label>
+      <input type="text" id="username" name="username" required>
+      <label for="password">Contraseña</label>
+      <input type="password" id="password" name="password" required>
+      <button type="submit">Entrar</button>
+    </form>
+    <p id="error-message"></p>
+  </div>
+  <div id="map" style="height: 500px; width: 100%;"></div> <!-- Añadir contenedor del mapa -->
+
+  <script src="login.js"></script>
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script> <!-- Importar Leaflet JS -->
+  <script type="module" src="script.js"></script> <!-- Añadir referencia al script del mapa como módulo -->
 </body>
+
 </html>
