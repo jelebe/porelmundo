@@ -1,4 +1,10 @@
-// script.js
+import { initializeApp } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-app.js";
+import { getDatabase, ref, push, onValue } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-database.js";
+
+
+
+const app = initializeApp(firebaseConfig);
+const database = getDatabase(app);
 
 // Inicializar el mapa
 var map = L.map('map').setView([0, 0], 2);
@@ -6,16 +12,35 @@ var map = L.map('map').setView([0, 0], 2);
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
   attribution: '© OpenStreetMap contributors'
 }).addTo(map);
-// Guardar marcadores en Firebase
-function saveMarkersToDB(markerData) {
-  const database = firebase.database();
-  database.ref('markers').push(markerData, function(error) {
-    if (error) {
-      console.error('Error saving marker:', error);
+
+// Manejar evento de doble clic para crear marcadores
+map.on('dblclick', function(e) {
+  var lat = e.latlng.lat;
+  var lng = e.latlng.lng;
+  addMarker([lat, lng]);
+});
+
+function addMarker(latlng, image = null, description = null, date = null) {
+  var marker = L.marker(latlng).addTo(map);
+  marker.image = image;
+  marker.description = description;
+  marker.date = date;
+
+  marker.on('click', function() {
+    if (hasContent(marker)) {
+      showMarkerMenu(latlng, marker);
     } else {
-      console.log('Marker saved successfully');
+      openModal(latlng, marker);
     }
   });
+
+  marker.on('popupclose', function() {
+    if (!hasContent(marker)) {
+      removeMarker(marker);
+    }
+  });
+
+  saveMarkers(); // Guardar marcadores en Firebase
 }
 
 function saveMarkers() {
@@ -35,11 +60,18 @@ function saveMarkers() {
   });
   localStorage.setItem('markers', JSON.stringify(markers));
 }
+
+// Guardar marcadores en Firebase
+function saveMarkersToDB(markerData) {
+  push(ref(database, 'markers'), markerData).catch(error => {
+    console.error('Error saving marker:', error);
+  });
+}
+
 // Cargar marcadores desde Firebase
 function loadMarkers() {
-  const database = firebase.database();
-  database.ref('markers').once('value', function(snapshot) {
-    snapshot.forEach(function(childSnapshot) {
+  onValue(ref(database, 'markers'), snapshot => {
+    snapshot.forEach(childSnapshot => {
       var markerData = childSnapshot.val();
       addMarker([markerData.lat, markerData.lng], markerData.image, markerData.description, markerData.date);
     });
@@ -48,6 +80,8 @@ function loadMarkers() {
 
 // Llamar a la función loadMarkers al cargar la página
 loadMarkers();
+
+
 map.on('dblclick', function(e) {
   var lat = e.latlng.lat;
   var lng = e.latlng.lng;
