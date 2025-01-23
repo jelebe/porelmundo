@@ -167,9 +167,9 @@ function removeMarker(marker) {
 function updateMarkerPopup(latlng, marker) {
   L.popup()
     .setLatLng(latlng)
-    .setContent((marker.date ? '<p class="marker-date">' + marker.date + '</p><br>' : '') +
-                (marker.image ? '<img src="' + marker.image + '" alt="Imagen" width="200"><br>' : '') +
+    .setContent((marker.image ? '<img src="' + marker.image + '" alt="Imagen" width="200"><br>' : '') +
                 (marker.description ? '<p>' + marker.description + '</p><br>' : '') +
+                (marker.date ? '<p class="marker-date">' + marker.date + '</p><br>' : '') +
                 '<button class="edit-marker-btn" onclick="editMarker(' + marker._leaflet_id + ')">✎</button>' +
                 '<button class="delete-marker-btn" onclick="deleteMarker(' + marker._leaflet_id + ')">✖</button>')
     .openOn(map);
