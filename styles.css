@@ -262,6 +262,7 @@ button[type="submit"]:hover {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra para efecto flotante */
     border-radius: 5px;
     margin: 20px auto;
+    position: relative; /* Asegura que los elementos hijos con posición absoluta se alineen con este contenedor */
 }
 
 .polaroid img {
@@ -275,16 +276,23 @@ button[type="submit"]:hover {
     font-family: 'Courier New', Courier, monospace;
     font-size: 14px;
     color: #333;
-    margin-bottom: 3px; /* Espacio entre la descripción y la fecha */
-    position: absolute; /* Centrar el texto */
-    width: 100%;        /* Asegura que el elemento tome todo el ancho disponible */
-    margin: 1 auto;     /* Centrar el elemento en su contenedor */
+    margin-bottom: 3px;
+    position: absolute; /* Posición absoluta */
+    left: 50%;
+    transform: translateX(-50%); /* Centrar horizontalmente */
+    bottom: 40px; /* Ajusta la posición vertical */
+    width: 100%;
+    text-align: center; /* Centrar el texto */
 }
 
 .polaroid .date {
     font-size: 12px;
     color: #777;
-    position: absolute;/* Centrar el texto */
-    width: 100%;        /* Asegura que el elemento tome todo el ancho disponible */
-    margin: 1 auto;     /* Centrar el elemento en su contenedor */
+    position: absolute; /* Posición absoluta */
+    left: 50%;
+    transform: translateX(-50%); /* Centrar horizontalmente */
+    bottom: 10px; /* Ajusta la posición vertical */
+    width: 100%;
+    text-align: center; /* Centrar el texto */
 }
+
