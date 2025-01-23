@@ -71,6 +71,18 @@ body {
     width: calc(100% - 40px);
 }
 
+/* Mejorar la visibilidad del texto en la sección de arrastre */
+.drop-area span {
+    display: block;
+    margin-top: 10px;
+    font-size: 14px;
+    color: #333;
+}
+
+.drop-area:hover {
+    border-color: #007bff;
+}
+
 /* Estilos del botón de selección */
 input[type="file"] {
     display: none;
