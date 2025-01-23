@@ -150,5 +150,23 @@ button[type="submit"]:hover {
         max-height: 50vh;
         width: auto;
     }
-}
 
+    /* Ajustes adicionales para móviles */
+    .drop-area {
+        width: calc(100% - 20px); /* Reducir el margen para pantallas pequeñas */
+        padding: 15px; /* Reducir el padding para pantallas pequeñas */
+    }
+
+    label {
+        padding: 8px 15px; /* Ajustar el padding del botón para pantallas pequeñas */
+    }
+
+    textarea, input[type="date"] {
+        width: calc(100% - 10px); /* Ajustar el ancho para pantallas pequeñas */
+        padding: 8px; /* Ajustar el padding para pantallas pequeñas */
+    }
+
+    button[type="submit"] {
+        padding: 8px; /* Ajustar el padding del botón para pantallas pequeñas */
+    }
+}
