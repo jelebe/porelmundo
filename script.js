@@ -35,9 +35,9 @@ function addMarker(latlng, image = null, description = null, date = null) {
 }
 
 function showMarkerMenu(latlng, marker) {
-  var popupContent = (marker.date ? '<p class="marker-date">' + marker.date + '</p><br>' : '') +
-                     (marker.image ? '<img src="' + marker.image + '" alt="Imagen" width="200"><br>' : '') + 
+  var popupContent = (marker.image ? '<img src="' + marker.image + '" alt="Imagen" width="200"><br>' : '') + 
                      (marker.description ? '<p>' + marker.description + '</p><br>' : '') +
+                     (marker.date ? '<p class="marker-date">' + marker.date + '</p><br>' : '') +
                      '<button class="edit-marker-btn" onclick="editMarker(' + marker._leaflet_id + ')">✎</button>' +
                      '<button class="delete-marker-btn" onclick="deleteMarker(' + marker._leaflet_id + ')">✖</button>';
   L.popup()
