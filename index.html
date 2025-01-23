@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Iniciar Sesión</title>
     <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap">  <!-- Añadir el enlace a Google Fonts -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap"> 
 </head>
 <body>
     <div class="login-container">
@@ -23,9 +23,9 @@
     <script type="module">
         // Import the functions you need from the SDKs you need
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-app.js";
-        // TODO: Add SDKs for Firebase products that you want to use
-        // https://firebase.google.com/docs/web/setup#available-libraries
-      
+        import { getStorage } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-storage.js";
+        import { getDatabase } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-database.js";
+
         // Your web app's Firebase configuration
         const firebaseConfig = {
           apiKey: "AIzaSyCLHKZmeUUahOD9pCG9HGRed9zxwP5vHb0",
@@ -35,9 +35,17 @@
           messagingSenderId: "716617534132",
           appId: "1:716617534132:web:77b9372971f803fcdd25e1"
         };
-      
+
         // Initialize Firebase
         const app = initializeApp(firebaseConfig);
+
+        // Initialize services
+        const storage = getStorage(app);
+        const database = getDatabase(app);
+
+        // Export app, storage, and database if needed elsewhere
+        export { app, storage, database };
       </script>
 </body>
 </html>
+
