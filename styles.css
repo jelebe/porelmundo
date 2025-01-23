@@ -158,7 +158,7 @@ button[type="submit"]:hover {
     }
 
     /* Ajustes para dispositivos móviles */
-@media (max-width: 600px) {
+@media (max-width: 500px) {
     .login-container {
         width: 90%;
         max-width: 280px; /* Reducir el ancho máximo */
