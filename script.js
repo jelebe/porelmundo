@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
   const firebaseConfig = {
     apiKey: "AIzaSyCLHKZmeUUahOD9pCG9HGRed9zxwP5vHb0",
     authDomain: "besosporelmundo.firebaseapp.com",
-    databaseURL: "https://besosporelmundo-default-rtdb.europe-west1.firebasedatabase.app/",
+    databaseURL: "https://besosporelmundo-default-rtdb.europe-west1.firebasedatabase.app",
     projectId: "besosporelmundo",
     storageBucket: "besosporelmundo.firebasestorage.app",
     messagingSenderId: "716617534132",
