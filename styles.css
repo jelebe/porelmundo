@@ -261,7 +261,6 @@ button[type="submit"]:hover {
     border: 10px solid white;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra para efecto flotante */
     border-radius: 5px;
-    text-align: center;
     margin: 20px auto;
 }
 
@@ -279,7 +278,7 @@ button[type="submit"]:hover {
     margin-bottom: 3px; /* Espacio entre la descripción y la fecha */
     text-align: center; /* Centrar el texto */
     width: 100%;        /* Asegura que el elemento tome todo el ancho disponible */
-    margin: 0 auto;     /* Centrar el elemento en su contenedor */
+    margin: 1 auto;     /* Centrar el elemento en su contenedor */
 }
 
 .polaroid .date {
@@ -287,5 +286,5 @@ button[type="submit"]:hover {
     color: #777;
     text-align: center; /* Centrar el texto */
     width: 100%;        /* Asegura que el elemento tome todo el ancho disponible */
-    margin: 0 auto;     /* Centrar el elemento en su contenedor */
+    margin: 1 auto;     /* Centrar el elemento en su contenedor */
 }
