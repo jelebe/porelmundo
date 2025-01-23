@@ -2,6 +2,10 @@
 body {
     font-family: Arial, sans-serif;
     background-color: #f4f4f9; /* Color retro */
+    background-image: url('images/fondo.jpg'); /* Restaurar imagen de fondo */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -80,11 +84,10 @@ body {
     font-size: 12px;
     font-family: 'Patrick Hand', cursive; /* Fuente manuscrita */
     color: #555;
-    margin-bottom: 5px;
     text-align: center;
     display: block;
     position: absolute;
-    bottom: -20px;
+    bottom: 10px; /* Ajustar para que la fecha esté dentro del borde inferior */
     left: 50%;
     transform: translateX(-50%);
     width: 100%;
@@ -172,3 +175,16 @@ body {
     margin-bottom: 20px; /* Espacio debajo del título */
 }
 
+/* Alinear y espaciar las imágenes pequeñas */
+.small-images {
+    display: flex;
+    justify-content: center;
+    gap: 10px; /* Espacio entre las imágenes */
+}
+
+.small-images img {
+    max-width: 100px; /* Ajusta el tamaño de las imágenes pequeñas */
+    height: auto;
+    border: 1px solid #ccc; /* Borde alrededor de las imágenes pequeñas */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra ligera */
+}
