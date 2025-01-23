@@ -179,11 +179,11 @@ document.addEventListener('DOMContentLoaded', (event) => {
     function handleFileSelect(event, marker) {
       var file = event.target.files[0];
       if (file && file.type.startsWith('image/')) {
-        // Sube la imagen a Firebase Storage
         var storageRef = ref(storage, 'images/' + file.name);
         uploadBytes(storageRef, file).then((snapshot) => {
-          // Obtén la URL de descarga de la imagen
+          console.log('Imagen subida:', snapshot);
           getDownloadURL(snapshot.ref).then((url) => {
+            console.log('URL de descarga:', url);
             marker.image = url; // Almacena la URL en el marcador
             saveMarkers();
           }).catch((error) => {
@@ -194,6 +194,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
         });
       }
     }
+    
     window.editMarker = function(markerId) {
       var marker = map._layers[markerId];
       if (marker) {
