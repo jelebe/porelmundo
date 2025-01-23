@@ -62,11 +62,11 @@ body {
 
 /* Área de arrastre */
 .drop-area {
-    border: 2px dashed #ccc;
+    border: 2px dashed #ffcccb;
     border-radius: 5px;
     padding: 20px;
     text-align: center;
-    background-color: #fafafa;
+    background-color: #ffe6e6;
     margin-bottom: 20px;
     width: calc(100% - 40px);
 }
@@ -80,7 +80,7 @@ body {
 }
 
 .drop-area:hover {
-    border-color: #a3c4f9;
+    border-color: #ff99a3;
 }
 
 /* Estilos del botón de selección */
@@ -91,7 +91,7 @@ input[type="file"] {
 label {
     display: inline-block;
     padding: 10px 20px;
-    background-color: #a3c4f9;
+    background-color: #ff99a3; /* Color rosa */
     color: #fff;
     border: none;
     border-radius: 5px;
@@ -101,7 +101,7 @@ label {
 }
 
 label:hover {
-    background-color: #81a1ea;
+    background-color: #ff6675; /* Color rosa más oscuro */
 }
 
 /* Estilos del campo de descripción */
@@ -113,10 +113,11 @@ textarea, input[type="date"] {
     box-sizing: border-box;
     margin-bottom: 20px;
     background-color: #f9f9f9;
+    color: #333; /* Color de texto más oscuro */
 }
 
 textarea:focus, input[type="date"]:focus {
-    border-color: #a3c4f9;
+    border-color: #ff99a3;
 }
 
 /* Estilos del botón de subir */
@@ -124,7 +125,7 @@ button[type="submit"] {
     display: block;
     width: 100%;
     padding: 10px;
-    background-color: #a3c4f9;
+    background-color: #ff99a3; /* Color rosa */
     color: #fff;
     border: none;
     border-radius: 5px;
@@ -134,7 +135,7 @@ button[type="submit"] {
 }
 
 button[type="submit"]:hover {
-    background-color: #81a1ea;
+    background-color: #ff6675; /* Color rosa más oscuro */
 }
 
 /* Ajustes para dispositivos móviles */
