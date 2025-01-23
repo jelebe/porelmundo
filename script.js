@@ -2,8 +2,19 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-app.js";
 import { getDatabase, ref, push, onValue } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-database.js";
 
+// Inicializar Firebase
+const firebaseConfig = {
+  apiKey: "AIzaSyCLHKZmeUUahOD9pCG9HGRed9zxwP5vHb0",
+  authDomain: "besosporelmundo.firebaseapp.com",
+  projectId: "besosporelmundo",
+  storageBucket: "besosporelmundo.firebasestorage.app",
+  messagingSenderId: "716617534132",
+  appId: "1:716617534132:web:77b9372971f803fcdd25e1"
+};
+
 const app = initializeApp(firebaseConfig);
 const database = getDatabase(app);
+
 
 // Inicializar el mapa
 var map = L.map('map').setView([0, 0], 2);
