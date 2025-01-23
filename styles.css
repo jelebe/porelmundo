@@ -54,6 +54,10 @@ body {
     width: 90%; /* Ancho en dispositivos móviles */
     max-width: 500px; /* Ancho máximo para dispositivos grandes */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra para darle un poco de profundidad */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-bottom: 40px; /* Espacio para los botones */
 }
 
 @media (max-width: 600px) {
@@ -144,4 +148,41 @@ body {
     font-family: 'Courier New', Courier, monospace; /* Cambia la fuente */
     color: #555; /* Color de texto */
     margin-bottom: 5px; /* Espacio debajo de la fecha */
+}
+
+/* Estilo de la polaroid */
+.modal-content {
+    border: 10px solid white; /* Borde blanco tipo polaroid */
+    border-radius: 5px; /* Esquinas ligeramente redondeadas */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5); /* Sombra para darle un efecto flotante */
+    padding: 0; /* Eliminar el padding extra */
+}
+
+.modal-content img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 0;
+}
+
+.modal-content .description {
+    padding: 10px;
+    text-align: center;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 14px;
+    color: #333;
+}
+
+.modal-content .date {
+    font-size: 12px;
+    color: #777;
+    margin-top: 5px;
+}
+
+.modal-content .buttons {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 15px;
+    padding: 10px;
 }
