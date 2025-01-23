@@ -179,12 +179,12 @@ button[type="submit"]:hover {
 
 /* Estilos del contenedor de inicio de sesión */
 .login-container {
-    width: 100%;
-    max-width: 400px;
-    margin: 50px auto;
-    padding: 20px;
+    width: 80%;
+    max-width: 300px;
+    margin: 40px auto;
+    padding: 15px;
     background-color: rgba(255, 235, 238, 0.9); /* Fondo semitransparente rosado */
-    border-radius: 10px;
+    border-radius: 9px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra para efecto flotante */
     text-align: center;
 }
