@@ -25,9 +25,9 @@ body {
 
 /* Estilos del mapa */
 #map {
-    height: 1600px; /* Ajusta la altura según tus necesidades */
+    height: 100%; /* Ajusta la altura según tus necesidades */
     width: 100%;
-    max-width: 800px; /* Ajusta el ancho máximo según tus necesidades */
+    max-width: 1200px; /* Ajusta el ancho máximo según tus necesidades */
     position: relative;
     z-index: 1; /* Asegura que el mapa tenga un z-index menor */
 }
@@ -128,8 +128,16 @@ body {
     color: #3399ff;
 }
 
+/* Ajustes para dispositivos móviles */
 @media (max-width: 600px) {
+    #map {
+        height: 80vh; /* Ajusta la altura del mapa en pantallas pequeñas */
+        width: 100%;
+        max-width: 100%; /* Ancho completo en dispositivos móviles */
+    }
+
     .modal-content {
         width: 90%; /* Ancho en dispositivos móviles */
     }
 }
+
