@@ -80,7 +80,7 @@ body {
 }
 
 .drop-area:hover {
-    border-color: #68829e;
+    border-color: #a3c4f9;
 }
 
 /* Estilos del botón de selección */
@@ -91,7 +91,7 @@ input[type="file"] {
 label {
     display: inline-block;
     padding: 10px 20px;
-    background-color: #68829e;
+    background-color: #a3c4f9;
     color: #fff;
     border: none;
     border-radius: 5px;
@@ -101,7 +101,7 @@ label {
 }
 
 label:hover {
-    background-color: #68829e;
+    background-color: #81a1ea;
 }
 
 /* Estilos del campo de descripción */
@@ -112,6 +112,11 @@ textarea, input[type="date"] {
     border-radius: 5px;
     box-sizing: border-box;
     margin-bottom: 20px;
+    background-color: #f9f9f9;
+}
+
+textarea:focus, input[type="date"]:focus {
+    border-color: #a3c4f9;
 }
 
 /* Estilos del botón de subir */
@@ -119,7 +124,7 @@ button[type="submit"] {
     display: block;
     width: 100%;
     padding: 10px;
-    background-color: #93b69a;
+    background-color: #a3c4f9;
     color: #fff;
     border: none;
     border-radius: 5px;
@@ -129,7 +134,7 @@ button[type="submit"] {
 }
 
 button[type="submit"]:hover {
-    background-color: #93b69a;
+    background-color: #81a1ea;
 }
 
 /* Ajustes para dispositivos móviles */
@@ -153,7 +158,7 @@ button[type="submit"]:hover {
 
     /* Ajustes adicionales para móviles */
     .drop-area {
-        width: calc(90% - 20px); /* Reducir el margen para pantallas pequeñas */
+        width: calc(100% - 20px); /* Reducir el margen para pantallas pequeñas */
         padding: 15px; /* Reducir el padding para pantallas pequeñas */
     }
 
@@ -162,7 +167,7 @@ button[type="submit"]:hover {
     }
 
     textarea, input[type="date"] {
-        width: calc(90% - 10px); /* Ajustar el ancho para pantallas pequeñas */
+        width: calc(100% - 10px); /* Ajustar el ancho para pantallas pequeñas */
         padding: 8px; /* Ajustar el padding para pantallas pequeñas */
     }
 
