@@ -147,3 +147,95 @@ body {
         width: auto; /* Mantiene la proporción de la imagen */
     }
 }
+
+/* Estilos adicionales para el formulario de subida de imagen */
+
+/* Contenedor del menú de inserción de imagen */
+.image-upload-container {
+    width: 100%;
+    max-width: 500px;
+    margin: 0 auto; /* Centrar el contenedor */
+    padding: 20px;
+    background-color: #fff; /* Fondo blanco para el cuadro */
+    border: 1px solid #ddd; /* Borde del cuadro */
+    border-radius: 5px; /* Bordes redondeados */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra para efecto flotante */
+    text-align: left; /* Alinear el contenido a la izquierda */
+}
+
+/* Estilos del título */
+.image-upload-container h2 {
+    font-size: 18px;
+    margin-bottom: 20px;
+}
+
+/* Estilos del área de arrastre */
+.image-upload-container .drop-area {
+    border: 2px dashed #ccc;
+    border-radius: 5px;
+    padding: 20px;
+    text-align: center;
+    margin-bottom: 20px;
+    background-color: #fafafa;
+}
+
+/* Estilos del botón de selección */
+.image-upload-container input[type="file"] {
+    display: none;
+}
+
+.image-upload-container label {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: center;
+}
+
+.image-upload-container label:hover {
+    background-color: #0056b3;
+}
+
+/* Estilos del campo de descripción */
+.image-upload-container .description {
+    margin-bottom: 10px;
+}
+
+.image-upload-container input[type="text"] {
+    width: calc(100% - 20px);
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+/* Estilos del campo de fecha */
+.image-upload-container input[type="date"] {
+    width: calc(100% - 20px);
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+/* Estilos del botón de subir */
+.image-upload-container .upload-btn {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    background-color: #28a745;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: center;
+}
+
+.image-upload-container .upload-btn:hover {
+    background-color: #218838;
+}
