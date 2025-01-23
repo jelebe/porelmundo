@@ -1,6 +1,4 @@
 // script.js
-import { initializeApp } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-app.js";
-import { getDatabase, ref, push, onValue } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-database.js";
 
 // Inicializar Firebase
 const firebaseConfig = {
