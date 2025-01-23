@@ -49,15 +49,15 @@ body {
 .modal-content {
     background-color: #fefefe;
     margin: 5% auto;
-    border: 10px solid white; /* Borde blanco tipo polaroid */
+    border: 1px solid #ddd; /* Borde del cuadro */
     border-radius: 5px; /* Esquinas ligeramente redondeadas */
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5); /* Sombra para darle un efecto flotante */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* Sombra para efecto flotante */
     width: 90%; /* Ancho en dispositivos móviles */
     max-width: 500px; /* Ancho máximo para dispositivos grandes */
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 0; /* Eliminar el padding extra */
+    padding: 20px; /* Añadir padding */
 }
 
 .modal-content img {
@@ -204,20 +204,12 @@ body {
     margin-bottom: 10px;
 }
 
-.image-upload-container input[type="text"] {
-    width: calc(100% - 20px);
-    padding: 10px;
-    margin-bottom: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    box-sizing: border-box;
-}
-
-/* Estilos del campo de fecha */
+.image-upload-container textarea,
+.image-upload-container input[type="text"],
 .image-upload-container input[type="date"] {
     width: calc(100% - 20px);
     padding: 10px;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
     box-sizing: border-box;
