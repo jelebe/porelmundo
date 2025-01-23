@@ -157,24 +157,38 @@ button[type="submit"]:hover {
         width: auto;
     }
 
-    /* Ajustes adicionales para móviles */
-    .drop-area {
-        width: calc(100% - 20px); /* Reducir el margen para pantallas pequeñas */
-        padding: 15px; /* Reducir el padding para pantallas pequeñas */
+    /* Ajustes para dispositivos móviles */
+@media (max-width: 600px) {
+    .login-container {
+        width: 90%;
+        max-width: 280px; /* Reducir el ancho máximo */
+        padding: 10px; /* Reducir el padding */
     }
 
-    label {
-        padding: 8px 15px; /* Ajustar el padding del botón para pantallas pequeñas */
+    .login-container h2 {
+        font-size: 20px; /* Reducir el tamaño de fuente del título */
     }
 
-    textarea, input[type="date"] {
-        width: calc(100% - 10px); /* Ajustar el ancho para pantallas pequeñas */
-        padding: 8px; /* Ajustar el padding para pantallas pequeñas */
+    .login-container label {
+        font-size: 14px; /* Reducir el tamaño de fuente de las etiquetas */
     }
 
-    button[type="submit"] {
-        padding: 8px; /* Ajustar el padding del botón para pantallas pequeñas */
+    .login-container input[type="text"],
+    .login-container input[type="password"] {
+        width: calc(100% - 16px); /* Reducir el ancho */
+        padding: 8px; /* Reducir el padding */
+        font-size: 14px; /* Reducir el tamaño de fuente */
     }
+
+    .login-container button {
+        padding: 8px; /* Reducir el padding */
+        font-size: 14px; /* Reducir el tamaño de fuente */
+    }
+
+    #error-message {
+        font-size: 12px; /* Reducir el tamaño de fuente del mensaje de error */
+    }
+}
 }
 
 /* Estilos del contenedor de inicio de sesión */
