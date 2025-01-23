@@ -243,7 +243,7 @@ button[type="submit"]:hover {
 }
 
 .login-container button:hover {
-    background-color: #ff6675; /* Color rosado más oscuro */
+    background-color: #0e0103; /* Color rosado más oscuro */
 }
 
 /* Estilos del mensaje de error */
