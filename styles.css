@@ -52,7 +52,6 @@ body {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     text-align: center;
     position: relative;
-    padding-bottom: 50px; /* Añadir espacio en la parte inferior para el efecto Polaroid */
 }
 
 .modal-content img {
@@ -64,7 +63,6 @@ body {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-/* Estilo para el borde Polaroid */
 .polaroid-frame {
     border: 1px solid white;
     padding: 10px;
@@ -72,7 +70,6 @@ body {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     margin-bottom: 20px;
     position: relative;
-    padding-bottom: 50px; /* Espacio adicional en la parte inferior */
 }
 
 /* Estilo para la fecha del marcador */
