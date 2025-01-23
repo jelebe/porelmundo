@@ -138,6 +138,12 @@ body {
 
     .modal-content {
         width: 90%; /* Ancho en dispositivos móviles */
+        max-height: 90vh; /* Ajusta la altura máxima del contenido modal */
+        overflow-y: auto; /* Habilita el scroll vertical */
+    }
+
+    .modal-content img {
+        max-height: 50vh; /* Ajusta la altura máxima de la imagen */
+        width: auto; /* Mantiene la proporción de la imagen */
     }
 }
-
