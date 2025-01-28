@@ -194,6 +194,7 @@ body {
     transition: transform 0.3s ease;
     cursor: pointer;
     text-align: center; /* Centra el contenido */
+    overflow: hidden; /* Evita que el contenido sobresalga */
 }
 
 .polaroid-marker:hover {
@@ -202,8 +203,8 @@ body {
 }
 
 .polaroid-image {
-    width: 100%;
-    height: 150px;
+    max-width: 100%;
+    height: auto; /* Mantiene la proporción de la imagen */
     object-fit: cover;
     border-bottom: 2px solid #f0f0f0;
     margin-bottom: 8px;
