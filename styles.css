@@ -256,8 +256,8 @@ body {
 /* ===== Botones Edit/Borrar - Nueva Estética ===== */
 .edit-marker-btn, 
 .delete-marker-btn {
-    padding: 2px 8px !important;
-    font-size: 10px !important;
+    padding: 1px 4px !important;
+    font-size: 6px !important;
     border-radius: 4px !important;
     margin: 1px !important;
     letter-spacing: 0.5px;
