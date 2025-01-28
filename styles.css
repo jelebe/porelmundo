@@ -187,19 +187,20 @@ body {
 
 .image-container {
     display: flex;
-    justify-content: center; /* Centro horizontal */
-    align-items: center;     /* Centro vertical */
+    justify-content: center; /* Centrado horizontal */
+    align-items: center;     /* Centrado vertical */
+    text-align: center;      /* Asegura que el contenido en el contenedor esté centrado */
+    width: 100%;             /* Asegura que el contenedor ocupe todo el ancho */
 }
 
-.polaroid-marker {
-    background: white;
-    padding: 10px 15px 15px;
-    width: 200px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-    transform: rotate(-1deg);
-    transition: transform 0.3s ease;
-    cursor: pointer;
+.polaroid-image {
+    max-width: 100%;         /* Asegura que la imagen no sea más ancha que el contenedor */
+    height: auto;            /* Mantiene la relación de aspecto de la imagen */
+    object-fit: cover;
+    border-bottom: 2px solid #f0f0f0;
+    margin-bottom: 8px;
 }
+
 
 .polaroid-marker:hover {
     transform: rotate(1deg) scale(1.05);
