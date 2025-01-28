@@ -19,13 +19,16 @@ const storage = getStorage(app);
 const database = getDatabase(app);
 
 onAuthStateChanged(auth, (user) => {
-    if (!user) {
-        // Si no está autenticado, redirige a la página de inicio de sesión
-        window.location.href = 'index.html';
-    } else {
+    if (user) {
         console.log('Usuario autenticado:', user);
+        inicializarMapa();  // Solo inicializar el mapa si el usuario está autenticado
+    } else {
+        // Redirigir a la página de inicio de sesión si no está autenticado
+        window.location.href = 'index.html';
     }
 });
+
+function inicializarMapa() {
   // Inicializar el mapa de Leaflet
   var map = L.map('map').setView([0, 0], 2);
 
@@ -285,5 +288,5 @@ onAuthStateChanged(auth, (user) => {
   
     // Llama a loadMarkers para cargar los marcadores al iniciar
     loadMarkers();
-  });
+  };
     
