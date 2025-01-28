@@ -2,7 +2,7 @@
 Se trata de una página web sencilla donde ir localizando los besos de Marisol y Jesús por el Mundo.
 
 
-Versión pre-alpha:
+Versión alpha:
 - Inclusión de mapa desde openstreetmaps. Uso de Leaflet.
 - Creación de marcador al clicar dos veces en una localización.
 - Inclusión de botones para modificar y borrar marcadores.
@@ -12,5 +12,9 @@ Versión pre-alpha:
 >
 >
 >
-- Cosas a incluir:
-    - Poner un buscador de localizaciones. Tener la posibilidad de poder introducir una ubicacion a mano y a partir de ahí crear un marcador. Así se puede ser más exacto.
+Versión 1.0:
+- Inclusión de Firebase.
+- Inclusión de Firebase Authentication.
+- Visual estilo Polaroid.
+- Cuando se intenta acceder directamente a mapa.html, primero asegura que el usuario esté autenticado.
+- Cambios en las reglas de Firebase. Ya solo usuarios identificados pueden subir y modificar marcadores.
