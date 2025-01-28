@@ -226,21 +226,16 @@ body {
     justify-content: center;
 }
 
-/* Botones Edit/Borrar */
+/* ===== Botones Edit/Borrar - Versión Mini ===== */
 .edit-marker-btn, 
 .delete-marker-btn {
-    padding: 4px 10px !important;
-    font-size: 12px !important;
-    border-radius: 3px !important;
-    margin: 3px !important;
-    letter-spacing: 0.3px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1) !important;
-    transition: all 0.2s ease !important;
-    font-family: 'Handlee', cursive !important;
-    background: #ff88a2 !important;
-    border: none !important;
-    color: white !important;
-    cursor: pointer;
+    padding: 3px 8px !important;
+    font-size: 11px !important;
+    border-radius: 2px !important;
+    margin: 2px !important;
+    letter-spacing: 0.2px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1) !important;
+    min-width: 55px;
 }
 
 .delete-marker-btn {
@@ -251,6 +246,19 @@ body {
 .delete-marker-btn:hover {
     transform: translateY(-0.5px) !important;
     box-shadow: 0 3px 6px rgba(0,0,0,0.15) !important;
+}
+
+/* ===== Correcciones de Popup ===== */
+.leaflet-popup-content-wrapper {
+    overflow: visible !important;
+}
+
+.leaflet-popup-tip-container {
+    display: none !important;
+}
+
+.polaroid-popup-wrapper {
+    transform: translateX(-5px);
 }
 
 /* Modal */
@@ -337,13 +345,32 @@ body {
     }
     
     .polaroid-popup {
-        width: 200px;
+        width: 180px !important;
+        transform: rotate(0.5deg);
+        margin-left: 8px;
         padding: 12px;
-        transform: rotate(1deg);
+    }
+    
+    .polaroid-popup::before {
+        top: 6px;
+        left: 6px;
+        right: 6px;
+        bottom: 6px;
     }
     
     .image-container {
         height: 140px;
+    }
+    
+    .polaroid-actions {
+        gap: 6px;
+        margin-top: 12px;
+    }
+    
+    .edit-marker-btn, 
+    .delete-marker-btn {
+        padding: 2px 6px !important;
+        font-size: 10px !important;
     }
     
     .version-text {
