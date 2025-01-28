@@ -18,6 +18,32 @@ body {
     flex-grow: 1;
 }
 
+/* ===== Estilos de Lista de Ubicaciones ===== */
+.location-list {
+    columns: 3;
+    column-gap: 20px;
+    padding-left: 15px;
+    list-style: none;
+}
+
+.location-item {
+    break-inside: avoid-column;
+    margin-bottom: 8px;
+    position: relative;
+    padding-left: 12px;
+    font-family: 'Courier New', monospace;
+    color: #5a5a5a;
+}
+
+.location-item::before {
+    content: "•";
+    color: #ff6666;
+    position: absolute;
+    left: 0;
+    top: 1px;
+    font-size: 1.2em;
+}
+
 /* Login */
 .login-container {
     background: rgba(255, 255, 255, 0.95);
@@ -226,26 +252,55 @@ body {
     justify-content: center;
 }
 
-/* ===== Botones Edit/Borrar - Versión Mini ===== */
+/* ===== Botones Edit/Borrar - Nueva Estética ===== */
 .edit-marker-btn, 
 .delete-marker-btn {
-    padding: 3px 8px !important;
-    font-size: 11px !important;
-    border-radius: 2px !important;
-    margin: 2px !important;
-    letter-spacing: 0.2px;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.1) !important;
-    min-width: 55px;
+    padding: 2px 8px !important;
+    font-size: 10px !important;
+    border-radius: 4px !important;
+    margin: 1px !important;
+    letter-spacing: 0.5px;
+    border: 1px solid transparent !important;
+    transition: all 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    min-width: 50px;
+    cursor: pointer;
+}
+
+.edit-marker-btn {
+    background: linear-gradient(145deg, #ff99a3, #ff6675) !important;
+    color: #fff !important;
+    box-shadow: 0 2px 4px rgba(255,102,117,0.2) !important;
 }
 
 .delete-marker-btn {
-    background: #ff6666 !important;
+    background: linear-gradient(145deg, #ff6666, #ff4444) !important;
+    color: #fff !important;
+    box-shadow: 0 2px 4px rgba(255,68,68,0.2) !important;
 }
 
-.edit-marker-btn:hover,
+.edit-marker-btn:hover {
+    transform: translateY(-1px) !important;
+    box-shadow: 0 3px 6px rgba(255,102,117,0.3) !important;
+    border-color: #ff577f !important;
+}
+
 .delete-marker-btn:hover {
-    transform: translateY(-0.5px) !important;
-    box-shadow: 0 3px 6px rgba(0,0,0,0.15) !important;
+    transform: translateY(-1px) !important;
+    box-shadow: 0 3px 6px rgba(255,68,68,0.3) !important;
+    border-color: #ff4444 !important;
+}
+
+.edit-marker-btn::before {
+    content: "✎";
+    font-size: 9px;
+}
+
+.delete-marker-btn::before {
+    content: "✕";
+    font-size: 9px;
 }
 
 /* ===== Correcciones de Popup ===== */
@@ -333,6 +388,10 @@ body {
     .image-container {
         height: 160px;
     }
+    
+    .location-list {
+        columns: 2;
+    }
 }
 
 @media (max-width: 480px) {
@@ -370,7 +429,13 @@ body {
     .edit-marker-btn, 
     .delete-marker-btn {
         padding: 2px 6px !important;
-        font-size: 10px !important;
+        font-size: 9px !important;
+        min-width: 45px;
+    }
+    
+    .location-list {
+        columns: 1;
+        padding-left: 20px;
     }
     
     .version-text {
