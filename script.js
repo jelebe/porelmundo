@@ -21,195 +21,207 @@ const database = getDatabase(app);
 onAuthStateChanged(auth, (user) => {
     if (user) {
         console.log('Usuario autenticado:', user);
-        inicializarMapa();  // Solo inicializar el mapa si el usuario está autenticado
+        inicializarMapa();
     } else {
-        // Redirigir a la página de inicio de sesión si no está autenticado
         window.location.href = 'index.html';
     }
 });
 
 function inicializarMapa() {
-  // Inicializar el mapa de Leaflet
-  var map = L.map('map').setView([0, 0], 2);
+    var map = L.map('map').setView([0, 0], 2);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
 
-  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    attribution: '© OpenStreetMap contributors'
-  }).addTo(map);
-
-    // Función para añadir un marcador al hacer doble clic en el mapa
     map.on('dblclick', function(e) {
-      var lat = e.latlng.lat;
-      var lng = e.latlng.lng;
-      addMarker([lat, lng]);
+        var lat = e.latlng.lat;
+        var lng = e.latlng.lng;
+        addMarker([lat, lng]);
     });
-  
+
     function addMarker(latlng, image = null, description = null, date = null) {
-      var marker = L.marker(latlng).addTo(map);
-      marker.image = image;
-      marker.description = description;
-      marker.date = date;
-  
-      marker.on('click', function() {
-        if (hasContent(marker)) {
-          showMarkerMenu(latlng, marker);
-        } else {
-          openModal(latlng, marker);
-        }
-      });
-  
-      marker.on('popupclose', function() {
-        if (!hasContent(marker)) {
-          removeMarker(marker);
-        }
-      });
-  
-      saveMarkers();
-    }
-  
-    function showMarkerMenu(latlng, marker) {
-      var popupContent = (marker.image ? '<img src="' + marker.image + '" alt="Imagen" width="200"><br>' : '') + 
-                         (marker.description ? '<p>' + marker.description + '</p><br>' : '') +
-                         (marker.date ? '<p class="marker-date">' + marker.date + '</p><br>' : '') +
-                         '<button class="edit-marker-btn" onclick="editMarker(' + marker._leaflet_id + ')">✎</button>' +
-                         '<button class="delete-marker-btn" onclick="deleteMarker(' + marker._leaflet_id + ')">✖</button>';
-      L.popup()
-        .setLatLng(latlng)
-        .setContent(popupContent)
-        .openOn(map);
-    }
-  
-    window.deleteMarker = function(markerId) {
-      var marker = map._layers[markerId];
-      if (marker) {
-        var confirmation = confirm("¿Estás seguro de que quieres borrar este marcador?");
-        if (confirmation) {
-          removeMarker(marker);
-          deleteMarkerFromFirebase(marker);
-        }
-      }
-    };
-    
-    
-    function deleteMarkerFromFirebase(marker) {
-      const markersRef = dbRef(database, 'markers');
-      onValue(markersRef, (snapshot) => {
-        snapshot.forEach((childSnapshot) => {
-          const childData = childSnapshot.val();
-          const childKey = childSnapshot.key;
-          if (childData.latlng && childData.latlng.lat === marker.getLatLng().lat && childData.latlng.lng === marker.getLatLng().lng) {
-            const specificRef = dbRef(database, 'markers/' + childKey);
-            remove(specificRef)
-              .then(() => {
-                console.log('Marcador eliminado de Firebase');
-              })
-              .catch((error) => {
-                console.error('Error al eliminar el marcador de Firebase: ', error);
-              });
-          }
+        const polaroidContent = `
+            <div class="polaroid-marker">
+                ${image ? `<img src="${image}" class="polaroid-image">` : '<div class="polaroid-image" style="background: #f0f0f0;"></div>'}
+                ${description ? `<div class="polaroid-description">${description}</div>` : ''}
+                ${date ? `<div class="polaroid-date">${date}</div>` : ''}
+            </div>
+        `;
+
+        var marker = L.marker(latlng, {
+            icon: L.divIcon({
+                className: 'polaroid-icon',
+                html: polaroidContent,
+                iconSize: [220, 200],
+                iconAnchor: [110, 100]
+            })
+        }).addTo(map);
+
+        marker.image = image;
+        marker.description = description;
+        marker.date = date;
+
+        marker.on('click', function() {
+            if (hasContent(marker)) {
+                showMarkerMenu(latlng, marker);
+            } else {
+                openModal(latlng, marker);
+            }
         });
-      });
+
+        marker.on('popupclose', function() {
+            if (!hasContent(marker)) {
+                removeMarker(marker);
+            }
+        });
+
+        saveMarkers();
     }
-    
-    
+
+    function showMarkerMenu(latlng, marker) {
+        var popupContent = `
+            <div class="polaroid-marker">
+                ${marker.image ? `<img src="${marker.image}" class="polaroid-image">` : ''}
+                ${marker.description ? `<div class="polaroid-description">${marker.description}</div>` : ''}
+                ${marker.date ? `<div class="polaroid-date">${marker.date}</div>` : ''}
+                <div style="margin-top: 10px; text-align: center;">
+                    <button class="edit-marker-btn">✎ Editar</button>
+                    <button class="delete-marker-btn">✖ Borrar</button>
+                </div>
+            </div>
+        `;
+        
+        L.popup()
+            .setLatLng(latlng)
+            .setContent(popupContent)
+            .openOn(map);
+    }
+
+    window.deleteMarker = function(markerId) {
+        var marker = map._layers[markerId];
+        if (marker) {
+            var confirmation = confirm("¿Estás seguro de que quieres borrar este marcador?");
+            if (confirmation) {
+                removeMarker(marker);
+                deleteMarkerFromFirebase(marker);
+            }
+        }
+    };
+
+    function deleteMarkerFromFirebase(marker) {
+        const markersRef = dbRef(database, 'markers');
+        onValue(markersRef, (snapshot) => {
+            snapshot.forEach((childSnapshot) => {
+                const childData = childSnapshot.val();
+                const childKey = childSnapshot.key;
+                if (childData.latlng && childData.latlng.lat === marker.getLatLng().lat && childData.latlng.lng === marker.getLatLng().lng) {
+                    const specificRef = dbRef(database, 'markers/' + childKey);
+                    remove(specificRef)
+                        .then(() => {
+                            console.log('Marcador eliminado de Firebase');
+                        })
+                        .catch((error) => {
+                            console.error('Error al eliminar el marcador de Firebase: ', error);
+                        });
+                }
+            });
+        });
+    }
 
     function openModal(latlng, marker, isEdit = false) {
-      var modal = document.getElementById('modal');
-      modal.style.display = "block";
-  
-      document.getElementById('image-file').value = '';
-      document.getElementById('image-description').value = isEdit ? marker.description || '' : '';
-      document.getElementById('image-date').value = isEdit ? marker.date || '' : '';
-  
-      var closeBtn = document.getElementsByClassName("close")[0];
-      closeBtn.onclick = function() {
-        closeModal(marker);
-      };
-  
-      var form = document.getElementById('image-form');
-      form.onsubmit = function(event) {
-        event.preventDefault();
-        var imageDescription = document.getElementById('image-description').value;
-        var imageDate = document.getElementById('image-date').value;
-        if (marker.image || imageDescription) {
-          marker.description = imageDescription;
-          marker.date = imageDate;
-  
-          // Guarda los detalles del marcador en la base de datos
-          push(dbRef(database, 'markers'), {
-            latlng: marker.getLatLng(),
-            image: marker.image,
-            description: marker.description,
-            date: marker.date
-          }).then(() => {
-            updateMarkerPopup(latlng, marker);
-          }).catch((error) => {
-            console.error("Error al guardar los detalles del marcador en la base de datos: ", error);
-          });
-  
-          closeModal(marker);
-        }
-      };
-  
-      window.onclick = function(event) {
-        if (event.target == modal) {
-          closeModal(marker);
-        }
-      };
-  
-      var dropArea = document.getElementById('drop-area');
-      dropArea.addEventListener('dragover', handleDragOver);
-      dropArea.addEventListener('dragleave', handleDragLeave);
-      dropArea.addEventListener('drop', function(event) {
-        handleFileDrop(event, marker);
-      });
-  
-      document.getElementById('image-file').addEventListener('change', function(event) {
-        handleFileSelect(event, marker);
-      });
-    }
-    function closeModal(marker) {
-      var modal = document.getElementById('modal');
-      modal.style.display = "none";
-      if (!hasContent(marker)) {
-        removeMarker(marker);
-      }
-      saveMarkers();
-    }
-  
-    function handleDragOver(event) {
-      event.preventDefault();
-      event.target.classList.add('dragover');
-      document.getElementById('drag-confirmation').style.display = 'block';
-    }
-  
-    function handleDragLeave(event) {
-      event.preventDefault();
-      event.target.classList.remove('dragover');
-      document.getElementById('drag-confirmation').style.display = 'none';
-    }
-  
-    function handleFileDrop(event, marker) {
-      event.preventDefault();
-      event.target.classList.remove('dragover');
-      document.getElementById('drag-confirmation').style.display = 'none';
-      var file = event.dataTransfer.files[0];
-      if (file && file.type.startsWith('image/')) {
-        // Sube la imagen a Firebase Storage
-        var storageRef = ref(storage, 'images/' + file.name);
-        uploadBytes(storageRef, file).then((snapshot) => {
-          // Obtén la URL de descarga de la imagen
-          getDownloadURL(snapshot.ref).then((url) => {
-            marker.image = url; // Almacena la URL en el marcador
-            saveMarkers();
-          }).catch((error) => {
-            console.error("Error al obtener la URL de descarga: ", error);
-          });
-        }).catch((error) => {
-          console.error("Error al subir la imagen: ", error);
+        var modal = document.getElementById('modal');
+        modal.style.display = "block";
+
+        document.getElementById('image-file').value = '';
+        document.getElementById('image-description').value = isEdit ? marker.description || '' : '';
+        document.getElementById('image-date').value = isEdit ? marker.date || '' : '';
+
+        var closeBtn = document.getElementsByClassName("close")[0];
+        closeBtn.onclick = function() {
+            closeModal(marker);
+        };
+
+        var form = document.getElementById('image-form');
+        form.onsubmit = function(event) {
+            event.preventDefault();
+            var imageDescription = document.getElementById('image-description').value;
+            var imageDate = document.getElementById('image-date').value;
+            if (marker.image || imageDescription) {
+                marker.description = imageDescription;
+                marker.date = imageDate;
+
+                push(dbRef(database, 'markers'), {
+                    latlng: marker.getLatLng(),
+                    image: marker.image,
+                    description: marker.description,
+                    date: marker.date
+                }).then(() => {
+                    updateMarkerPopup(latlng, marker);
+                }).catch((error) => {
+                    console.error("Error al guardar los detalles del marcador en la base de datos: ", error);
+                });
+
+                closeModal(marker);
+            }
+        };
+
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                closeModal(marker);
+            }
+        };
+
+        var dropArea = document.getElementById('drop-area');
+        dropArea.addEventListener('dragover', handleDragOver);
+        dropArea.addEventListener('dragleave', handleDragLeave);
+        dropArea.addEventListener('drop', function(event) {
+            handleFileDrop(event, marker);
         });
-      }
+
+        document.getElementById('image-file').addEventListener('change', function(event) {
+            handleFileSelect(event, marker);
+        });
     }
-  
+
+    function closeModal(marker) {
+        var modal = document.getElementById('modal');
+        modal.style.display = "none";
+        if (!hasContent(marker)) {
+            removeMarker(marker);
+        }
+        saveMarkers();
+    }
+
+    function handleDragOver(event) {
+        event.preventDefault();
+        event.target.classList.add('dragover');
+        document.getElementById('drag-confirmation').style.display = 'block';
+    }
+
+    function handleDragLeave(event) {
+        event.preventDefault();
+        event.target.classList.remove('dragover');
+        document.getElementById('drag-confirmation').style.display = 'none';
+    }
+
+    function handleFileDrop(event, marker) {
+        event.preventDefault();
+        event.target.classList.remove('dragover');
+        document.getElementById('drag-confirmation').style.display = 'none';
+        var file = event.dataTransfer.files[0];
+        if (file && file.type.startsWith('image/')) {
+            var storageRef = ref(storage, 'images/' + file.name);
+            uploadBytes(storageRef, file).then((snapshot) => {
+                getDownloadURL(snapshot.ref).then((url) => {
+                    marker.image = url;
+                    saveMarkers();
+                }).catch((error) => {
+                    console.error("Error al obtener la URL de descarga: ", error);
+                });
+            }).catch((error) => {
+                console.error("Error al subir la imagen: ", error);
+            });
+        }
+    }
+
     function handleFileSelect(event, marker) {
       var file = event.target.files[0];
       if (file && file.type.startsWith('image/')) {

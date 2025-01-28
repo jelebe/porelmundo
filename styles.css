@@ -179,39 +179,106 @@ body {
     border-color: #ff99a3;
 }
 
-/* Polaroid */
-.polaroid {
-    width: 300px;
-    background: #fffdf5;
-    padding: 15px;
-    border: 10px solid white;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    border-radius: 5px;
-    margin: 20px auto;
-    transform: rotate(-2deg);
+/* Estilos Polaroid para Marcadores */
+.leaflet-marker-icon {
+    background: transparent !important;
+    border: none !important;
+}
+
+.polaroid-marker {
+    background: white;
+    padding: 10px 15px 15px;
+    width: 200px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    transform: rotate(-1deg);
     transition: transform 0.3s ease;
+    cursor: pointer;
 }
 
-.polaroid:hover {
-    transform: rotate(1deg) scale(1.03);
+.polaroid-marker:hover {
+    transform: rotate(1deg) scale(1.05);
+    z-index: 1000 !important;
 }
 
-.polaroid img {
-    max-width: 100%;
-    height: auto;
-    margin-bottom: 10px;
+.polaroid-image {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+    border-bottom: 2px solid #f0f0f0;
+    margin-bottom: 8px;
 }
 
-.polaroid .description {
-    font-family: 'Pacifico', cursive;
-    font-size: 18px;
-    color: #333;
+.polaroid-description {
+    font-family: 'Handlee', cursive;
+    font-size: 15px;
+    color: #444;
     margin: 5px 0;
+    line-height: 1.2;
+    min-height: 40px;
 }
 
-.polaroid .date {
-    font-size: 14px;
-    color: #777;
+.polaroid-date {
+    font-family: 'Dancing Script', cursive;
+    font-size: 13px;
+    color: #888;
+    text-align: right;
+    padding-right: 5px;
+    margin-top: 5px;
+}
+
+/* Ajustes para el Popup de Edición */
+.leaflet-popup-content {
+    font-family: 'Handlee', cursive !important;
+    width: 220px !important;
+}
+
+.leaflet-popup-content-wrapper {
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2) !important;
+    border-radius: 8px !important;
+}
+
+.edit-marker-btn, .delete-marker-btn {
+    font-family: 'Handlee', cursive !important;
+    margin: 5px !important;
+    padding: 5px 10px !important;
+    background: #ff99a3 !important;
+    border: none !important;
+    color: white !important;
+    border-radius: 4px !important;
+    cursor: pointer;
+}
+
+/* Campos del Formulario */
+#image-description {
+    font-family: 'Handlee', cursive;
+    font-size: 16px;
+    padding: 8px;
+    border: 1px solid #ff99a3;
+    border-radius: 4px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+#image-date {
+    font-family: 'Dancing Script', cursive;
+    font-size: 15px;
+    padding: 6px;
+    border: 1px solid #ff99a3;
+    border-radius: 4px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.upload-btn {
+    background: #ff99a3;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 10px;
+    width: 100%;
 }
 
 /* Responsive */
@@ -231,6 +298,14 @@ body {
         margin: 30px auto;
         padding: 15px;
     }
+
+    .polaroid-marker {
+        width: 180px;
+    }
+    
+    .polaroid-image {
+        height: 120px;
+    }
 }
 
 @media (max-width: 480px) {
@@ -242,8 +317,13 @@ body {
         font-size: 1.5em;
     }
     
-    .polaroid {
-        width: 90%;
+    .polaroid-marker {
+        width: 160px;
+        padding: 8px 12px 12px;
+    }
+    
+    .polaroid-image {
+        height: 100px;
     }
     
     .login-container input[type="email"],
