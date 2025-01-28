@@ -1,5 +1,4 @@
-/* styles.css */
-/*** Estilos Globales ***/
+/* Estilos Globales */
 body {
     font-family: 'Arial', sans-serif;
     margin: 0;
@@ -19,7 +18,7 @@ body {
     flex-grow: 1;
 }
 
-/*** Login ***/
+/* Login */
 .login-container {
     background: rgba(255, 255, 255, 0.95);
     width: 90%;
@@ -87,8 +86,8 @@ body {
     background-color: #ff6675;
 }
 
-/*** Mensajes de Autenticación ***/
-.auth-message {
+/* Mensajes de Autenticación */
+#auth-message {
     padding: 12px;
     margin: 15px 0;
     border-radius: 8px;
@@ -96,13 +95,13 @@ body {
     font-size: 0.9em;
 }
 
-.auth-message.error {
+#auth-message.error {
     background-color: #ffebee;
     color: #c62828;
     border: 1px solid #ffcdd2;
 }
 
-.auth-message.success {
+#auth-message.success {
     background-color: #e8f5e9;
     color: #2e7d32;
     border: 1px solid #c8e6c9;
@@ -131,7 +130,7 @@ body {
     cursor: not-allowed;
 }
 
-/*** Mapa ***/
+/* Mapa */
 #map {
     height: 80vh;
     width: 100%;
@@ -142,7 +141,7 @@ body {
     background: white;
 }
 
-/*** Modal ***/
+/* Modal */
 .modal {
     display: none;
     position: fixed;
@@ -180,7 +179,7 @@ body {
     border-color: #ff99a3;
 }
 
-/*** Polaroid ***/
+/* Polaroid */
 .polaroid {
     width: 300px;
     background: #fffdf5;
@@ -215,7 +214,7 @@ body {
     color: #777;
 }
 
-/*** Responsive ***/
+/* Responsive */
 @media (max-width: 768px) {
     #map {
         height: 70vh;
