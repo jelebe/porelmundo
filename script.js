@@ -72,34 +72,38 @@ function inicializarMapa() {
         saveMarkers();
     }
 
-    function showPolaroidPopup(latlng, marker) {
-        const popupContent = `
-            <div class="polaroid-popup-wrapper">
-                <div class="polaroid-popup">
-                    ${marker.image ? `
-                    <div class="image-container">
-                        <img src="${marker.image}" class="polaroid-image">
-                    </div>` : ''}
-                    ${marker.description ? `<div class="polaroid-description">${marker.description}</div>` : ''}
-                    ${marker.date ? `<div class="polaroid-date">${marker.date}</div>` : ''}
-                    <div class="polaroid-actions">
-                        <button class="edit-marker-btn" onclick="editMarker(${marker._leaflet_id})">✎ Editar</button>
-                        <button class="delete-marker-btn" onclick="deleteMarker(${marker._leaflet_id})">✖ Borrar</button>
-                    </div>
-                </div>
-            </div>
-        `;
+    // ... (código anterior sin cambios)
 
-        L.popup({
-            className: 'polaroid-popup-wrapper',
-            closeButton: false,
-            autoClose: false,
-            closeOnEscapeKey: true
-        })
-        .setLatLng(latlng)
-        .setContent(popupContent)
-        .openOn(map);
+    function showPolaroidPopup(latlng, marker) {
+      const popupContent = `
+          <div class="polaroid-popup-wrapper">
+              <div class="polaroid-popup">
+                  ${marker.image ? `
+                  <div class="image-container">
+                      <img src="${marker.image}" class="polaroid-image">
+                  </div>` : ''}
+                  ${marker.description ? `<div class="polaroid-description">${marker.description}</div>` : ''}
+                  ${marker.date ? `<div class="polaroid-date">${marker.date}</div>` : ''}
+                  <div class="polaroid-actions">
+                      <button class="edit-marker-btn" onclick="editMarker(${marker._leaflet_id})">Editar</button>
+                      <button class="delete-marker-btn" onclick="deleteMarker(${marker._leaflet_id})">Borrar</button>
+                  </div>
+              </div>
+          </div>
+      `;
+
+      L.popup({
+          className: 'polaroid-popup-wrapper',
+          closeButton: false,
+          autoClose: false,
+          closeOnEscapeKey: true
+      })
+      .setLatLng(latlng)
+      .setContent(popupContent)
+      .openOn(map);
     }
+
+
 
     window.deleteMarker = function(markerId) {
         var marker = map._layers[markerId];
