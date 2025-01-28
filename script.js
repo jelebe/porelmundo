@@ -37,33 +37,29 @@ function inicializarMapa() {
         addMarker([lat, lng]);
     });
 
-    function addMarker(latlng, image = null, description = null, date = null) {
-        const polaroidContent = `
-            <div class="polaroid-marker">
-                ${image ? `<img src="${image}" class="polaroid-image">` : '<div class="polaroid-image" style="background: #f0f0f0;"></div>'}
-                ${description ? `<div class="polaroid-description">${description}</div>` : ''}
-                ${date ? `<div class="polaroid-date">${date}</div>` : ''}
-            </div>
-        `;
+    // Icono predeterminado para marcadores
+    const defaultIcon = L.icon({
+        iconUrl: 'https://cdn-icons-png.flaticon.com/512/684/684908.png', // Icono de corazón
+        iconSize: [32, 32],
+        iconAnchor: [16, 32]
+    });
 
+    function addMarker(latlng, image = null, description = null, date = null) {
         var marker = L.marker(latlng, {
-            icon: L.divIcon({
-                className: 'polaroid-icon',
-                html: polaroidContent,
-                iconSize: [220, 200],
-                iconAnchor: [110, 100]
-            })
+            icon: defaultIcon
         }).addTo(map);
 
+        // Almacenar datos del marcador
         marker.image = image;
         marker.description = description;
         marker.date = date;
 
-        marker.on('click', function() {
+        // Evento click para mostrar polaroid
+        marker.on('click', function(e) {
             if (hasContent(marker)) {
-                showMarkerMenu(latlng, marker);
+                showPolaroidPopup(e.latlng, marker);
             } else {
-                openModal(latlng, marker);
+                openModal(e.latlng, marker);
             }
         });
 
@@ -76,23 +72,33 @@ function inicializarMapa() {
         saveMarkers();
     }
 
-    function showMarkerMenu(latlng, marker) {
-        var popupContent = `
-            <div class="polaroid-marker">
-                ${marker.image ? `<img src="${marker.image}" class="polaroid-image">` : ''}
-                ${marker.description ? `<div class="polaroid-description">${marker.description}</div>` : ''}
-                ${marker.date ? `<div class="polaroid-date">${marker.date}</div>` : ''}
-                <div style="margin-top: 10px; text-align: center;">
-                    <button class="edit-marker-btn">✎ Editar</button>
-                    <button class="delete-marker-btn">✖ Borrar</button>
+    function showPolaroidPopup(latlng, marker) {
+        const popupContent = `
+            <div class="polaroid-popup-wrapper">
+                <div class="polaroid-popup">
+                    ${marker.image ? `
+                    <div class="image-container">
+                        <img src="${marker.image}" class="polaroid-image">
+                    </div>` : ''}
+                    ${marker.description ? `<div class="polaroid-description">${marker.description}</div>` : ''}
+                    ${marker.date ? `<div class="polaroid-date">${marker.date}</div>` : ''}
+                    <div class="polaroid-actions">
+                        <button class="edit-marker-btn" onclick="editMarker(${marker._leaflet_id})">✎ Editar</button>
+                        <button class="delete-marker-btn" onclick="deleteMarker(${marker._leaflet_id})">✖ Borrar</button>
+                    </div>
                 </div>
             </div>
         `;
-        
-        L.popup()
-            .setLatLng(latlng)
-            .setContent(popupContent)
-            .openOn(map);
+
+        L.popup({
+            className: 'polaroid-popup-wrapper',
+            closeButton: false,
+            autoClose: false,
+            closeOnEscapeKey: true
+        })
+        .setLatLng(latlng)
+        .setContent(popupContent)
+        .openOn(map);
     }
 
     window.deleteMarker = function(markerId) {
@@ -223,82 +229,71 @@ function inicializarMapa() {
     }
 
     function handleFileSelect(event, marker) {
-      var file = event.target.files[0];
-      if (file && file.type.startsWith('image/')) {
-        var storageRef = ref(storage, 'images/' + file.name);
-        uploadBytes(storageRef, file).then((snapshot) => {
-          console.log('Imagen subida:', snapshot);
-          getDownloadURL(snapshot.ref).then((url) => {
-            console.log('URL de descarga:', url);
-            marker.image = url; // Almacena la URL en el marcador
-            saveMarkers();
-          }).catch((error) => {
-            console.error("Error al obtener la URL de descarga: ", error);
-          });
-        }).catch((error) => {
-          console.error("Error al subir la imagen: ", error);
-        });
-      }
+        var file = event.target.files[0];
+        if (file && file.type.startsWith('image/')) {
+            var storageRef = ref(storage, 'images/' + file.name);
+            uploadBytes(storageRef, file).then((snapshot) => {
+                getDownloadURL(snapshot.ref).then((url) => {
+                    marker.image = url;
+                    saveMarkers();
+                }).catch((error) => {
+                    console.error("Error al obtener la URL de descarga: ", error);
+                });
+            }).catch((error) => {
+                console.error("Error al subir la imagen: ", error);
+            });
+        }
     }
-    
+
     window.editMarker = function(markerId) {
-      var marker = map._layers[markerId];
-      if (marker) {
-        openModal(marker.getLatLng(), marker, true);
-      }
+        var marker = map._layers[markerId];
+        if (marker) {
+            openModal(marker.getLatLng(), marker, true);
+        }
     };
-  
+
     function removeMarker(marker) {
-      map.removeLayer(marker);
-      saveMarkers();
+        map.removeLayer(marker);
+        saveMarkers();
     }
-    
-  
+
     function updateMarkerPopup(latlng, marker) {
-      L.popup()
-        .setLatLng(latlng)
-        .setContent((marker.image ? '<img src="' + marker.image + '" alt="Imagen" width="200"><br>' : '') +
-                    (marker.description ? '<p>' + marker.description + '</p><br>' : '') +
-                    (marker.date ? '<p class="marker-date">' + marker.date + '</p><br>' : '') +
-                    '<button class="edit-marker-btn" onclick="editMarker(' + marker._leaflet_id + ')">✎</button>' +
-                    '<button class="delete-marker-btn" onclick="deleteMarker(' + marker._leaflet_id + ')">✖</button>')
-        .openOn(map);
+        if (hasContent(marker)) {
+            showPolaroidPopup(latlng, marker);
+        }
     }
-  
+
     function hasContent(marker) {
-      return marker.image || marker.description || marker.date;
+        return marker.image || marker.description || marker.date;
     }
-  
+
     function saveMarkers() {
-      var markers = [];
-      map.eachLayer(function(layer) {
-        if (layer instanceof L.Marker) {
-          markers.push({
-            latlng: layer.getLatLng(),
-            image: layer.image,
-            description: layer.description,
-            date: layer.date
-          });
-        }
-      });
-      localStorage.setItem('markers', JSON.stringify(markers));
+        var markers = [];
+        map.eachLayer(function(layer) {
+            if (layer instanceof L.Marker) {
+                markers.push({
+                    latlng: layer.getLatLng(),
+                    image: layer.image,
+                    description: layer.description,
+                    date: layer.date
+                });
+            }
+        });
+        localStorage.setItem('markers', JSON.stringify(markers));
     }
-  
+
     function loadMarkers() {
-      // Carga los marcadores desde la base de datos
-      const markersRef = dbRef(database, 'markers');
-      onValue(markersRef, (snapshot) => {
-        const markers = snapshot.val();
-        for (let key in markers) {
-          if (markers.hasOwnProperty(key)) {
-            let markerData = markers[key];
-            addMarker(markerData.latlng, markerData.image, markerData.description, markerData.date);
-          }
-        }
-      });
+        const markersRef = dbRef(database, 'markers');
+        onValue(markersRef, (snapshot) => {
+            const markers = snapshot.val();
+            for (let key in markers) {
+                if (markers.hasOwnProperty(key)) {
+                    let markerData = markers[key];
+                    addMarker(markerData.latlng, markerData.image, markerData.description, markerData.date);
+                }
+            }
+        });
     }
-  
-    // Llama a loadMarkers para cargar los marcadores al iniciar
+
     loadMarkers();
-  };
-    
+};
