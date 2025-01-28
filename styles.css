@@ -336,4 +336,12 @@ body {
         display: block;
         margin: 10px 0;
     }
+    /* texto de version en la que nos encontramos */
+    .version-text {
+        font-size: 10px;
+        text-align: center;
+        color: #666; /* Puedes ajustar el color si es necesario */
+        margin-top: 20px;
+    }
+    
 }
