@@ -18,3 +18,8 @@ Versión 1.0:
 - Visual estilo Polaroid.
 - Cuando se intenta acceder directamente a mapa.html, primero asegura que el usuario esté autenticado.
 - Cambios en las reglas de Firebase. Ya solo usuarios identificados pueden subir y modificar marcadores.
+
+
+
+-cosas a hacer. Ocultar la API Key de Firebase: Es una buena práctica no exponer directamente la API Key de Firebase en el código del frontend. Podrías mover la lógica de autenticación a un backend (por ejemplo, usando Node.js con Express) y hacer las llamadas a Firebase desde allí.
+-Agregar un Botón de Cerrar Sesión

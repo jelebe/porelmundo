@@ -72,8 +72,6 @@ function inicializarMapa() {
         saveMarkers();
     }
 
-    // ... (código anterior sin cambios)
-
     function showPolaroidPopup(latlng, marker) {
       const popupContent = `
           <div class="polaroid-popup-wrapper">
@@ -154,6 +152,12 @@ function inicializarMapa() {
             event.preventDefault();
             var imageDescription = document.getElementById('image-description').value;
             var imageDate = document.getElementById('image-date').value;
+            // Validar la longitud de la descripción
+            if (imageDescription.length > 50) {
+            alert("La descripción no puede exceder los 50 caracteres.");
+            return; // Detener el envío del formulario si la descripción es demasiado larga
+             }
+
             if (marker.image || imageDescription) {
                 marker.description = imageDescription;
                 marker.date = imageDate;
