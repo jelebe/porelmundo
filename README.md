@@ -1,5 +1,5 @@
 # BesosporelMundo
-Se trata de una página web sencilla donde ir localizando los besos de Marisol y Jesús por el Mundo.
+Se trata de una página web sencilla donde ir localizando imágenes por el mundo.
 
 
 Versión alpha:
