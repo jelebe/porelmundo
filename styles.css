@@ -1,16 +1,15 @@
-/* styles.css - Versión con fondo más visible */
+/* styles.css */
 /*** Estilos Globales ***/
 body {
     font-family: 'Arial', sans-serif;
     margin: 0;
     padding: 0;
     min-height: 100vh;
-    background: linear-gradient(rgba(255, 235, 238, 0.6), rgba(255, 245, 246, 0.7)),
+    background: linear-gradient(rgba(255, 235, 238, 0.8), rgba(255, 235, 238, 0.8)),
                 url('images/fondo.jpg') center/cover fixed;
     display: flex;
     flex-direction: column;
     align-items: center;
-    backdrop-filter: blur(2px);
 }
 
 .container {
@@ -20,78 +19,242 @@ body {
     flex-grow: 1;
 }
 
-/*** Login - Versión más transparente ***/
+/*** Login ***/
 .login-container {
-    background: rgba(255, 255, 255, 0.88);
-    backdrop-filter: blur(5px);
-    border: 1px solid rgba(255, 152, 163, 0.2);
+    background: rgba(255, 255, 255, 0.95);
     width: 90%;
     max-width: 350px;
     padding: 25px;
     border-radius: 15px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
     margin: 50px auto;
+}
+
+.login-container h2 {
+    color: #ff577f;
+    font-family: 'Pacifico', cursive;
+    margin: 0 0 25px 0;
+    font-size: 1.8em;
+    text-align: center;
+}
+
+#login-form {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 15px;
+}
+
+.login-container label {
+    display: block;
+    width: 100%;
+    margin-bottom: 8px;
+    text-align: left;
+    font-weight: 500;
+    color: #555;
+}
+
+.login-container input[type="email"],
+.login-container input[type="password"] {
+    width: 100%;
+    padding: 12px 15px;
+    border: 2px solid #ff99a3;
+    border-radius: 8px;
+    box-sizing: border-box;
+    font-size: 16px;
     transition: all 0.3s ease;
 }
 
-.login-container:hover {
-    box-shadow: 0 6px 25px rgba(0, 0, 0, 0.12);
+.login-container input[type="email"]:focus,
+.login-container input[type="password"]:focus {
+    border-color: #ff577f;
+    outline: none;
+    box-shadow: 0 0 5px rgba(255, 87, 127, 0.3);
 }
 
-/*** Ajustes para mejor contraste ***/
-.login-container h2 {
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+.login-container button {
+    width: 100%;
+    padding: 12px;
+    background-color: #ff99a3;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
 }
 
-/*** Mapa con transparencia ***/
-#map {
-    background: rgba(255, 255, 255, 0.9);
-    border: 2px solid rgba(255, 152, 163, 0.3);
+.login-container button:hover {
+    background-color: #ff6675;
 }
 
-/*** Modal translúcido ***/
-.modal-content {
-    background: rgba(255, 255, 255, 0.95);
-    backdrop-filter: blur(8px);
-}
-
-/*** Ajustes de color para mejor legibilidad ***/
-.polaroid {
-    background: rgba(255, 253, 245, 0.95);
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.12);
-}
-
-/*** Campos de formulario semi-transparentes ***/
-.login-container input[type="email"],
-.login-container input[type="password"] {
-    background: rgba(255, 255, 255, 0.9);
-    border: 2px solid rgba(255, 152, 163, 0.4);
-}
-
-/*** Efectos de hover más suaves ***/
-.auth-links a:hover {
-    color: #ff385c;
-    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
-}
-
-/*** Ajustes de opacidad en mensajes ***/
+/*** Mensajes de Autenticación ***/
 .auth-message {
-    opacity: 0.98;
+    padding: 12px;
+    margin: 15px 0;
+    border-radius: 8px;
+    text-align: center;
+    font-size: 0.9em;
 }
 
-/*** Nuevos efectos de transición ***/
-* {
-    transition: 
-        background-color 0.3s ease,
-        border-color 0.3s ease,
-        opacity 0.3s ease,
-        transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+.auth-message.error {
+    background-color: #ffebee;
+    color: #c62828;
+    border: 1px solid #ffcdd2;
 }
 
-/*** Texto con sombra suave para mejor legibilidad ***/
-.polaroid .description,
+.auth-message.success {
+    background-color: #e8f5e9;
+    color: #2e7d32;
+    border: 1px solid #c8e6c9;
+}
+
+.auth-links {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.auth-links a {
+    color: #e91e63;
+    text-decoration: none;
+    font-size: 0.9em;
+    margin: 0 10px;
+    transition: color 0.3s ease;
+}
+
+.auth-links a:hover {
+    color: #ff1744;
+    text-decoration: underline;
+}
+
+#login-btn:disabled {
+    background-color: #ffb3c1 !important;
+    cursor: not-allowed;
+}
+
+/*** Mapa ***/
+#map {
+    height: 80vh;
+    width: 100%;
+    max-width: 1200px;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+    margin: 20px 0;
+    background: white;
+}
+
+/*** Modal ***/
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 9999;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+.modal-content {
+    background: #fff;
+    margin: 5% auto;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+    width: 90%;
+    max-width: 500px;
+}
+
+.drop-area {
+    border: 2px dashed #ffcccb;
+    border-radius: 8px;
+    padding: 20px;
+    text-align: center;
+    background-color: #fff5f6;
+    margin: 15px 0;
+    transition: all 0.3s ease;
+}
+
+.dragover {
+    transform: scale(1.02);
+    border-color: #ff99a3;
+}
+
+/*** Polaroid ***/
+.polaroid {
+    width: 300px;
+    background: #fffdf5;
+    padding: 15px;
+    border: 10px solid white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+    margin: 20px auto;
+    transform: rotate(-2deg);
+    transition: transform 0.3s ease;
+}
+
+.polaroid:hover {
+    transform: rotate(1deg) scale(1.03);
+}
+
+.polaroid img {
+    max-width: 100%;
+    height: auto;
+    margin-bottom: 10px;
+}
+
+.polaroid .description {
+    font-family: 'Pacifico', cursive;
+    font-size: 18px;
+    color: #333;
+    margin: 5px 0;
+}
+
 .polaroid .date {
-    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+    font-size: 14px;
+    color: #777;
 }
 
-/*** Resto del CSS mantiene la estructura anterior... ***/
+/*** Responsive ***/
+@media (max-width: 768px) {
+    #map {
+        height: 70vh;
+        border-radius: 10px;
+    }
+    
+    .modal-content {
+        width: 95%;
+        margin: 10% auto;
+        padding: 15px;
+    }
+    
+    .login-container {
+        margin: 30px auto;
+        padding: 15px;
+    }
+}
+
+@media (max-width: 480px) {
+    body {
+        background-attachment: scroll;
+    }
+    
+    .login-container h2 {
+        font-size: 1.5em;
+    }
+    
+    .polaroid {
+        width: 90%;
+    }
+    
+    .login-container input[type="email"],
+    .login-container input[type="password"] {
+        padding: 10px;
+        font-size: 14px;
+    }
+    
+    .auth-links a {
+        display: block;
+        margin: 10px 0;
+    }
+}
