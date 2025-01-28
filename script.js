@@ -134,86 +134,86 @@ function inicializarMapa() {
         });
     }
 
-      function openModal(latlng, marker, isEdit = false) {
-        var modal = document.getElementById('modal');
-        modal.style.display = "block";
-    
-        document.getElementById('image-file').value = '';
-        document.getElementById('image-description').value = isEdit ? marker.description || '' : '';
-        document.getElementById('image-date').value = isEdit ? marker.date || '' : '';
-    
-        var closeBtn = document.getElementsByClassName("close")[0];
-        closeBtn.onclick = function() {
-            closeModal(marker);
-        };
-    
-        // Variable temporal para almacenar el archivo seleccionado
-        let selectedFile = null;
-    
-        var form = document.getElementById('image-form');
-        form.onsubmit = async function(event) {
-            event.preventDefault();
-            var imageDescription = document.getElementById('image-description').value;
-            var imageDate = document.getElementById('image-date').value;
-    
-            // Validar la longitud de la descripción
-            if (imageDescription.length > 200) {
-                alert("La descripción no puede exceder los 200 caracteres.");
-                return; // Detener el envío del formulario si la descripción es demasiado larga
-            }
-    
-            // Subir la imagen solo si se ha seleccionado un archivo
-            if (selectedFile) {
-                try {
-                    var storageRef = ref(storage, 'images/' + selectedFile.name);
-                    await uploadBytes(storageRef, selectedFile); // Subir la imagen
-                    const url = await getDownloadURL(storageRef); // Obtener la URL de la imagen
-                    marker.image = url; // Asignar la URL al marcador
-                } catch (error) {
-                    console.error("Error al subir la imagen: ", error);
-                    return; // Detener el proceso si hay un error
-                }
-            }
-    
-            // Guardar los detalles del marcador en Firebase Database
-            if (marker.image || imageDescription) {
-                marker.description = imageDescription;
-                marker.date = imageDate;
-    
-                push(dbRef(database, 'markers'), {
-                    latlng: marker.getLatLng(),
-                    image: marker.image,
-                    description: marker.description,
-                    date: marker.date
-                }).then(() => {
-                    updateMarkerPopup(latlng, marker);
-                }).catch((error) => {
-                    console.error("Error al guardar los detalles del marcador en la base de datos: ", error);
-                });
-    
-                closeModal(marker);
-            }
-        };
-    
-        window.onclick = function(event) {
-            if (event.target == modal) {
-                closeModal(marker);
-            }
-        };
-    
-        var dropArea = document.getElementById('drop-area');
-        dropArea.addEventListener('dragover', handleDragOver);
-        dropArea.addEventListener('dragleave', handleDragLeave);
-        dropArea.addEventListener('drop', function(event) {
-            event.preventDefault();
-            event.target.classList.remove('dragover');
-            document.getElementById('drag-confirmation').style.display = 'none';
-            selectedFile = event.dataTransfer.files[0]; // Almacenar el archivo arrastrado
-        });
-    
-        document.getElementById('image-file').addEventListener('change', function(event) {
-            selectedFile = event.target.files[0]; // Almacenar el archivo seleccionado
-        });
+    function openModal(latlng, marker, isEdit = false) {
+      var modal = document.getElementById('modal');
+      modal.style.display = "block";
+  
+      document.getElementById('image-file').value = '';
+      document.getElementById('image-description').value = isEdit ? marker.description || '' : '';
+      document.getElementById('image-date').value = isEdit ? marker.date || '' : '';
+  
+      var closeBtn = document.getElementsByClassName("close")[0];
+      closeBtn.onclick = function() {
+          closeModal(marker);
+      };
+  
+      // Variable temporal para almacenar el archivo seleccionado
+      let selectedFile = null;
+  
+      var form = document.getElementById('image-form');
+      form.onsubmit = async function(event) {
+          event.preventDefault();
+          var imageDescription = document.getElementById('image-description').value;
+          var imageDate = document.getElementById('image-date').value;
+  
+          // Validar la longitud de la descripción
+          if (imageDescription.length > 200) {
+              alert("La descripción no puede exceder los 200 caracteres.");
+              return; // Detener el envío del formulario si la descripción es demasiado larga
+          }
+  
+          // Subir la imagen solo si se ha seleccionado un archivo
+          if (selectedFile) {
+              try {
+                  var storageRef = ref(storage, 'images/' + selectedFile.name);
+                  await uploadBytes(storageRef, selectedFile); // Subir la imagen
+                  const url = await getDownloadURL(storageRef); // Obtener la URL de la imagen
+                  marker.image = url; // Asignar la URL al marcador
+              } catch (error) {
+                  console.error("Error al subir la imagen: ", error);
+                  return; // Detener el proceso si hay un error
+              }
+          }
+  
+          // Guardar los detalles del marcador en Firebase Database
+          if (marker.image || imageDescription) {
+              marker.description = imageDescription;
+              marker.date = imageDate;
+  
+              push(dbRef(database, 'markers'), {
+                  latlng: marker.getLatLng(),
+                  image: marker.image,
+                  description: marker.description,
+                  date: marker.date
+              }).then(() => {
+                  updateMarkerPopup(latlng, marker);
+              }).catch((error) => {
+                  console.error("Error al guardar los detalles del marcador en la base de datos: ", error);
+              });
+  
+              closeModal(marker);
+          }
+      };
+  
+      window.onclick = function(event) {
+          if (event.target == modal) {
+              closeModal(marker);
+          }
+      };
+  
+      var dropArea = document.getElementById('drop-area');
+      dropArea.addEventListener('dragover', handleDragOver);
+      dropArea.addEventListener('dragleave', handleDragLeave);
+      dropArea.addEventListener('drop', function(event) {
+          event.preventDefault();
+          event.target.classList.remove('dragover');
+          document.getElementById('drag-confirmation').style.display = 'none';
+          selectedFile = event.dataTransfer.files[0]; // Almacenar el archivo arrastrado
+      });
+  
+      document.getElementById('image-file').addEventListener('change', function(event) {
+          selectedFile = event.target.files[0]; // Almacenar el archivo seleccionado
+      });
     }
 
     function closeModal(marker) {
