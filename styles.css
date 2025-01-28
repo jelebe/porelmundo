@@ -185,6 +185,11 @@ body {
     border: none !important;
 }
 
+.polaroid-marker:hover {
+    transform: rotate(1deg) scale(1.05);
+    z-index: 1000 !important;
+}
+
 .image-container {
     display: flex;
     justify-content: center; /* Centrado horizontal */
@@ -202,11 +207,8 @@ body {
 }
 
 
-.polaroid-marker:hover {
-    transform: rotate(1deg) scale(1.05);
-    z-index: 1000 !important;
-}
 
+/*
 .polaroid-image {
     width: 100%;
     height: 150px;
@@ -214,7 +216,7 @@ body {
     border-bottom: 2px solid #f0f0f0;
     margin-bottom: 8px;
 }
-
+*/
 .polaroid-description {
     font-family: 'Handlee', cursive;
     font-size: 15px;
