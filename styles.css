@@ -322,4 +322,91 @@ body {
         left: 10px;
         color: #666;
     }
+
+    
+
+    /* Botones Edit/Borrar más pequeños */
+    .edit-marker-btn,
+    .delete-marker-btn {
+    padding: 4px 10px !important;       /* Reducción de tamaño */
+    font-size: 12px !important;         /* Texto más pequeño */
+    border-radius: 3px !important;      /* Esquinas menos redondeadas */
+    margin: 3px !important;             /* Menor margen */
+    letter-spacing: 0.3px;              /* Espaciado de texto ajustado */
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1) !important; /* Sombra suave */
+    }
+
+    /* Efecto hover más sutil */
+    .edit-marker-btn:hover,
+    .delete-marker-btn:hover {
+    transform: translateY(-0.5px) !important; /* Menor movimiento */
+    box-shadow: 0 3px 6px rgba(0,0,0,0.15) !important;
+    }
+
+    /* Mejoras al estilo Polaroid */
+    .polaroid-popup {
+    transform: rotate(1.5deg);          /* Rotación más sutil */
+    border: 1px solid #e0e0e0;          /* Borde más definido */
+    padding: 12px !important;           /* Padding ajustado */
+    background: linear-gradient(          /* Degradado símil papel foto */
+        to bottom,
+        #ffffff 90%,
+        #f8f8f8 100%
+    );
+    }
+
+    .polaroid-popup::before {             /* Efecto de borde interno */
+    content: '';
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    right: 8px;
+    bottom: 8px;
+    border: 1px solid rgba(0,0,0,0.08);
+    pointer-events: none;
+    }
+
+    .image-container {                    /* Borde tipo foto */
+    border: 1px solid #eee;
+    background: #fff !important;
+    padding: 5px;
+    box-shadow: inset 0 0 8px rgba(0,0,0,0.03);
+    }
+
+    .polaroid-image {                     /* Efecto foto vintage */
+    filter: sepia(0.1) brightness(0.98) contrast(1.05);
+    }
+
+    .polaroid-description {               /* Texto estilo manuscrito */
+    font-size: 15px !important;
+    color: #5a5a5a !important;
+    margin: 8px 0 !important;
+    font-weight: 500;
+    }
+
+    .polaroid-date {                      /* Color de fecha más suave */
+    color: #909090 !important;
+    font-size: 13px !important;
+    }
+
+    /* Ajustes de animación */
+    @keyframes popupScale {
+    from {
+        transform: scale(0.9) rotate(3deg);  /* Rotación inicial más marcada */
+        opacity: 0;
+    }
+    to {
+        transform: scale(1) rotate(1.5deg);  /* Rotación final más sutil */
+        opacity: 1;
+    }
+    }
+
+    /* Mejor contraste en botones */
+    .edit-marker-btn {
+    background: #ff88a2 !important;     /* Tono más vibrante */
+    }
+
+    .delete-marker-btn {
+    background: #ff6666 !important;     /* Rojo más intenso */
+    }
 }
