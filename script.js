@@ -233,21 +233,31 @@ function inicializarMapa() {
     }
 
     function handleFileSelect(event, marker) {
-        var file = event.target.files[0];
-        if (file && file.type.startsWith('image/')) {
-            var storageRef = ref(storage, 'images/' + file.name);
-            uploadBytes(storageRef, file).then((snapshot) => {
-                getDownloadURL(snapshot.ref).then((url) => {
-                    marker.image = url;
-                    saveMarkers();
-                }).catch((error) => {
-                    console.error("Error al obtener la URL de descarga: ", error);
-                });
-            }).catch((error) => {
-                console.error("Error al subir la imagen: ", error);
-            });
-        }
-    }
+      const file = event.target.files[0];
+      if (file && file.type.startsWith('image/')) {
+          const reader = new FileReader();
+          reader.onload = function(e) {
+              const imgPreview = document.createElement('img');
+              imgPreview.src = e.target.result;
+              imgPreview.style.maxWidth = '100%';
+              imgPreview.style.maxHeight = '200px';
+              document.getElementById('drop-area').appendChild(imgPreview);
+          };
+          reader.readAsDataURL(file);
+  
+          const storageRef = ref(storage, 'images/' + file.name);
+          uploadBytes(storageRef, file).then((snapshot) => {
+              getDownloadURL(snapshot.ref).then((url) => {
+                  marker.image = url;
+                  saveMarkers();
+              }).catch((error) => {
+                  console.error("Error al obtener la URL de descarga: ", error);
+              });
+          }).catch((error) => {
+              console.error("Error al subir la imagen: ", error);
+          });
+      }
+  }
 
     window.editMarker = function(markerId) {
         var marker = map._layers[markerId];
