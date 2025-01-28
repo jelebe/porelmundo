@@ -2,6 +2,12 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-app.js";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-storage.js";
 import { getDatabase, ref as dbRef, push, onValue } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-database.js";
+import { 
+    getAuth, 
+    signInWithEmailAndPassword,
+    sendPasswordResetEmail,
+    createUserWithEmailAndPassword
+} from "https://www.gstatic.com/firebasejs/11.2.0/firebase-auth.js";
 
 document.addEventListener('DOMContentLoaded', (event) => {
   // Inicializa Firebase
@@ -14,6 +20,32 @@ document.addEventListener('DOMContentLoaded', (event) => {
     messagingSenderId: "716617534132",
     appId: "1:716617534132:web:77b9372971f803fcdd25e1"
   };
+// Login con Firebase
+document.getElementById('login-form').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const email = document.getElementById('email').value;
+  const password = document.getElementById('password').value;
+  const loginBtn = document.getElementById('login-btn');
+  
+  try {
+      loginBtn.disabled = true;
+      loginBtn.textContent = 'Ingresando...';
+      
+      const userCredential = await signInWithEmailAndPassword(auth, email, password);
+      window.location.href = 'mapa.html';
+      
+  } catch (error) {
+      loginBtn.disabled = false;
+      loginBtn.textContent = 'Entrar';
+      const errorMessage = {
+          'auth/user-not-found': 'Usuario no registrado',
+          'auth/wrong-password': 'Contraseña incorrecta',
+          'auth/invalid-email': 'Formato de email inválido'
+      }[error.code] || 'Error al iniciar sesión';
+      showMessage(errorMessage, true);
+  }
+});
+
 
   const app = initializeApp(firebaseConfig);
   const storage = getStorage(app);
@@ -26,6 +58,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
     attribution: '© OpenStreetMap contributors'
   }).addTo(map);
 
+  
     // Función para añadir un marcador al hacer doble clic en el mapa
     map.on('dblclick', function(e) {
       var lat = e.latlng.lat;
