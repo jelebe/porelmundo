@@ -193,6 +193,7 @@ body {
     transform: rotate(-1deg);
     transition: transform 0.3s ease;
     cursor: pointer;
+    text-align: center; /* Centra el contenido */
 }
 
 .polaroid-marker:hover {
@@ -206,6 +207,9 @@ body {
     object-fit: cover;
     border-bottom: 2px solid #f0f0f0;
     margin-bottom: 8px;
+    display: block; /* Asegura que la imagen sea un bloque */
+    margin-left: auto; /* Centra horizontalmente */
+    margin-right: auto; /* Centra horizontalmente */
 }
 
 .polaroid-description {
@@ -215,6 +219,7 @@ body {
     margin: 5px 0;
     line-height: 1.2;
     min-height: 40px;
+    text-align: center; /* Centra el texto */
 }
 
 .polaroid-date {
@@ -225,6 +230,7 @@ body {
     padding-right: 5px;
     margin-top: 5px;
 }
+
 
 /* Ajustes para el Popup de Edición */
 .leaflet-popup-content {
