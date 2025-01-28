@@ -1,11 +1,9 @@
-// script.js
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-app.js";
+import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-auth.js";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-storage.js";
-import { getDatabase, ref as dbRef, push, onValue } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-database.js";
+import { getDatabase, ref as dbRef, push, onValue, remove } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-database.js";
 
-document.addEventListener('DOMContentLoaded', (event) => {
-  // Inicializa Firebase
-  const firebaseConfig = {
+const firebaseConfig = {
     apiKey: "AIzaSyCLHKZmeUUahOD9pCG9HGRed9zxwP5vHb0",
     authDomain: "besosporelmundo.firebaseapp.com",
     databaseURL: "https://besosporelmundo-default-rtdb.europe-west1.firebasedatabase.app/",
@@ -13,12 +11,21 @@ document.addEventListener('DOMContentLoaded', (event) => {
     storageBucket: "besosporelmundo.firebasestorage.app",
     messagingSenderId: "716617534132",
     appId: "1:716617534132:web:77b9372971f803fcdd25e1"
-  };
+};
 
-  const app = initializeApp(firebaseConfig);
-  const storage = getStorage(app);
-  const database = getDatabase(app);
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const storage = getStorage(app);
+const database = getDatabase(app);
 
+onAuthStateChanged(auth, (user) => {
+    if (!user) {
+        // Si no está autenticado, redirige a la página de inicio de sesión
+        window.location.href = 'index.html';
+    } else {
+        console.log('Usuario autenticado:', user);
+    }
+});
   // Inicializar el mapa de Leaflet
   var map = L.map('map').setView([0, 0], 2);
 

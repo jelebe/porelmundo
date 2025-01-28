@@ -1,43 +1,44 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Mapa Interactivo</title>
-  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
-  <link rel="stylesheet" href="styles.css" />
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap">  
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mapa Interactivo</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap">  
+    <script src="https://www.gstatic.com/firebasejs/11.2.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/11.2.0/firebase-auth.js"></script>
+    <script type="module" src="script.js"></script>
 </head>
 <body>
+    <h3 class="title">Besos por el Mundo</h3>
+    <div id="map"></div>
 
-<h3 class="title">Besos por el Mundo</h3>
-<div id="map"></div>
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <form id="image-form" class="image-upload-container">
+                <div class="drop-area" id="drop-area">
+                    Arrastra una imagen aquí o selecciona una imagen:
+                    <label for="image-file">Examinar...</label>
+                    <input type="file" id="image-file" accept="image/*">
+                    <span id="drag-confirmation" class="drag-confirmation">Imagen arrastrada y lista para subir</span>
+                </div>
+                <div class="description">
+                    <label for="image-description">Descripción:</label>
+                    <textarea id="image-description" name="image-description" rows="3" cols="40"></textarea>
+                </div>
+                <div>
+                    <label for="image-date">Fecha:</label>
+                    <input type="date" id="image-date" name="image-date">
+                </div>
+                <button type="submit" class="upload-btn">Subir</button>
+            </form>
+        </div>
+    </div>
 
-<div id="modal" class="modal">
-  <div class="modal-content">
-    <span class="close">&times;</span>
-    <form id="image-form" class="image-upload-container">
-      <div class="drop-area" id="drop-area">
-        Arrastra una imagen aquí o selecciona una imagen:
-        <label for="image-file">Examinar...</label>
-        <input type="file" id="image-file" accept="image/*">
-        <span id="drag-confirmation" class="drag-confirmation">Imagen arrastrada y lista para subir</span>
-      </div>
-      <div class="description">
-        <label for="image-description">Descripción:</label>
-        <textarea id="image-description" name="image-description" rows="3" cols="40"></textarea>
-      </div>
-      <div>
-        <label for="image-date">Fecha:</label>
-        <input type="date" id="image-date" name="image-date">
-      </div>
-      <button type="submit" class="upload-btn">Subir</button>
-    </form>
-  </div>
-</div>
-
-<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-<script type="module" src="script.js"></script>
-
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script type="module" src="script.js"></script>
 </body>
 </html>
