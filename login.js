@@ -19,7 +19,6 @@ document.getElementById('login-form').addEventListener('submit', function(event)
     const emailElement = document.getElementById('email');
     const passwordElement = document.getElementById('password');
 
-    // Verifica si los elementos existen
     console.log('Email element:', emailElement);
     console.log('Password element:', passwordElement);
 
