@@ -336,14 +336,19 @@ body {
         display: block;
         margin: 10px 0;
     }
-    /* texto de version en la que nos encontramos */
-    .version-text {
+     /* texto de version en la que nos encontramos */
+
+     .version-text {
+
         font-size: 10px;
+
         position: fixed;
+
         bottom: 10px;
+
         left: 10px;
+
         color: #666; /* Puedes ajustar el color si es necesario */
+
     }
-    
-    
 }
