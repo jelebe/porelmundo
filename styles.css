@@ -339,9 +339,11 @@ body {
     /* texto de version en la que nos encontramos */
     .version-text {
         font-size: 10px;
-        text-align: center;
+        position: fixed;
+        bottom: 10px;
+        left: 10px;
         color: #666; /* Puedes ajustar el color si es necesario */
-        margin-top: 20px;
     }
+    
     
 }
