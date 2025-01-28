@@ -16,8 +16,20 @@ const auth = getAuth(app);
 
 document.getElementById('login-form').addEventListener('submit', function(event) {
     event.preventDefault();
-    const email = document.getElementById('email').value;
-    const password = document.getElementById('password').value;
+    const emailElement = document.getElementById('email');
+    const passwordElement = document.getElementById('password');
+
+    // Verifica si los elementos existen
+    console.log('Email element:', emailElement);
+    console.log('Password element:', passwordElement);
+
+    if (!emailElement || !passwordElement) {
+        console.error('Elemento(s) no encontrado(s)');
+        return;
+    }
+
+    const email = emailElement.value;
+    const password = passwordElement.value;
 
     signInWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
