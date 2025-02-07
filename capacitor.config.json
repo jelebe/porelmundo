@@ -1,0 +1,6 @@
+{
+  "appId": "com.besosporelmundo.app",
+  "appName": "BesosPorElMundo",
+  "webDir": "www",
+  "bundledWebRuntime": false
+}
