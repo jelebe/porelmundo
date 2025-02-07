@@ -1,0 +1,27 @@
+# Dependencias
+node_modules/
+
+# Archivos de configuración local
+.env
+
+# Build outputs (si aplican)
+dist/
+build/
+
+# Archivos temporales y de sistema
+*.log
+*.tmp
+*.swp
+.DS_Store
+Thumbs.db
+
+# Editor/IDE specific files
+.vscode/
+.idea/
+
+# Firebase cache
+firebase-debug.log
+firebase-tools.log
+
+# Otros archivos generados
+*.map
