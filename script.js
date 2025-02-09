@@ -6,14 +6,15 @@ import { getDatabase, ref as dbRef, push, onValue, remove } from "https://www.gs
 
 // Configuración de Firebase usando variables de entorno
 const firebaseConfig = {
-  apiKey: import.meta.env.REACT_APP_API_KEY,
-  authDomain: import.meta.env.REACT_APP_AUTH_DOMAIN,
-  databaseURL: import.meta.env.REACT_APP_DATABASE_URL,
-  projectId: import.meta.env.REACT_APP_PROJECT_ID,
-  storageBucket: import.meta.env.REACT_APP_STORAGE_BUCKET,
-  messagingSenderId: import.meta.env.REACT_APP_MESSAGING_SENDER_ID,
-  appId: import.meta.env.REACT_APP_APP_ID,
-};
+    apiKey: "AIzaSyCLHKZmeUUahOD9pCG9HGRed9zxwP5vHb0",
+    authDomain: "besosporelmundo.firebaseapp.com",
+    databaseURL: "https://besosporelmundo-default-rtdb.europe-west1.firebasedatabase.app",
+    projectId: "besosporelmundo",
+    storageBucket: "besosporelmundo.firebasestorage.app",
+    messagingSenderId: "716617534132",
+    appId: "1:716617534132:web:77b9372971f803fcdd25e1"
+  
+  };
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);

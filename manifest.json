@@ -1,0 +1,16 @@
+{
+    "name": "Besos por el Mundo",
+    "short_name": "BpM",
+    "start_url": ".",
+    "display": "standalone",
+    "background_color": "#ffffff",
+    "description": "Besos por el Mundo",
+    "icons": [
+      {
+        "src": "images/me-gusta.png",
+        "sizes": "192x192",
+        "type": "image/png"
+      }
+    ]
+  }
+  
