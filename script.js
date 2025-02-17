@@ -35,7 +35,7 @@ function inicializarMapa() {
 
     map.on('dblclick', function (e) {
         var latlng = e.latlng;
-        addMarker(latlng);
+        addMarker([latlng.lat, latlng.lng]);
     });
 
     // Icono predeterminado para marcadores
@@ -73,15 +73,11 @@ function inicializarMapa() {
 
     function showPolaroidPopup(latlng, marker) {
         const popupContent = `
-            <div class="image-container">
-                ${marker.image ? `<img src="${marker.image}" alt="Imagen" class="polaroid-image">` : ''}
-            </div>
-            <div class="polaroid-description">${marker.description || ''}</div>
-            <div class="polaroid-date">${marker.date || ''}</div>
-            <div class="polaroid-actions">
-                <button class="edit-marker-btn" onclick="editMarker('${marker._leaflet_id}')">Editar</button>
-                <button class="delete-marker-btn" onclick="deleteMarker('${marker._leaflet_id}')">Borrar</button>
-            </div>
+            ${marker.image ? `<img src="${marker.image}" alt="Imagen" style="max-width: 100%; max-height: 150px;">` : ''}
+            ${marker.description ? `<div>${marker.description}</div>` : ''}
+            ${marker.date ? `<div>${marker.date}</div>` : ''}
+            <button class="edit-marker-btn" onclick="editMarker('${marker._leaflet_id}')">Editar</button>
+            <button class="delete-marker-btn" onclick="deleteMarker('${marker._leaflet_id}')">Borrar</button>
         `;
 
         L.popup({
@@ -98,7 +94,8 @@ function inicializarMapa() {
     window.deleteMarker = function (markerId) {
         var marker = map._layers[markerId];
         if (marker) {
-            if (confirm("¿Estás seguro de que quieres borrar este marcador?")) {
+            var confirmation = confirm("¿Estás seguro de que quieres borrar este marcador?");
+            if (confirmation) {
                 removeMarker(marker);
                 deleteMarkerFromFirebase(marker);
             }
@@ -144,41 +141,43 @@ function inicializarMapa() {
         form.onsubmit = async function (event) {
             event.preventDefault();
 
-            var imageDescription = document.getElementById('image-description').value.trim();
+            var imageDescription = document.getElementById('image-description').value;
             var imageDate = document.getElementById('image-date').value;
 
             // Validar la longitud de la descripción
             if (imageDescription.length > 200) {
                 alert("La descripción no puede exceder los 200 caracteres.");
-                return;
+                return; // Detener el envío del formulario si la descripción es demasiado larga
             }
 
             // Subir la imagen solo si se ha seleccionado un archivo
             if (selectedFile) {
                 try {
-                    var storageReference = storageRef(storage, 'images/' + selectedFile.name);
+                    var storageReference = storageRef(storage, 'images/' + selectedFile.name); // Usar storageRef
                     await uploadBytes(storageReference, selectedFile); // Subir la imagen
                     const url = await getDownloadURL(storageReference); // Obtener la URL de la imagen
                     marker.image = url; // Asignar la URL al marcador
                 } catch (error) {
                     console.error("Error al subir la imagen: ", error);
-                    return;
+                    return; // Detener el proceso si hay un error
                 }
             }
 
             // Guardar los detalles del marcador en Firebase Database
-            if (imageDescription || marker.image) {
+            if (marker.image || imageDescription) {
                 marker.description = imageDescription;
                 marker.date = imageDate;
 
-                push(dbRef(database, 'markers'), {
+                push(dbRef(database, 'markers'), { // Usar dbRef
                     latlng: marker.getLatLng(),
                     image: marker.image,
                     description: marker.description,
                     date: marker.date
-                })
-                    .then(() => updateMarkerPopup(latlng, marker))
-                    .catch((error) => console.error("Error al guardar los detalles del marcador en la base de datos: ", error));
+                }).then(() => {
+                    updateMarkerPopup(latlng, marker);
+                }).catch((error) => {
+                    console.error("Error al guardar los detalles del marcador en la base de datos: ", error);
+                });
 
                 closeModal(marker);
             }
